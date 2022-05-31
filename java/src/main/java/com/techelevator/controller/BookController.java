@@ -23,11 +23,6 @@ public class BookController {
         this.bookDAO = bookDAO;
     }
 
-//    @RequestMapping( path = "/book/{id}", method = RequestMethod.GET )
-//    public Book getBook(  ) {
-//        return bookDAO.getBook( param );
-//    }
-
     @RequestMapping( path = "/books/{id}", method = RequestMethod.GET )
     public Book getBookByID(@PathVariable int id ) {
         return bookDAO.getBook( id );

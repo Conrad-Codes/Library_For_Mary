@@ -1,17 +1,25 @@
 package com.techelevator.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
 public class Book {
 
+    @JsonProperty("book_id")
     private int id;
     private String title;
+    @JsonProperty("author_name")
     private List<String> authors;
     private String isbn;
+    @JsonProperty("genre_name")
     private List<String> genres;
     private String description;
-    private Date initialPublishDate;
+    @JsonProperty("published_date")
+    private LocalDate initialPublishDate;
+    @JsonProperty("cover_art")
     private String imgUrl;
 
     public Book() {};
@@ -64,11 +72,11 @@ public class Book {
         this.description = description;
     }
 
-    public Date getInitialPublishDate() {
+    public LocalDate getInitialPublishDate() {
         return initialPublishDate;
     }
 
-    public void setInitialPublishDate(Date initialPublishDate) {
+    public void setInitialPublishDate(LocalDate initialPublishDate) {
         this.initialPublishDate = initialPublishDate;
     }
 

@@ -10,10 +10,4 @@ public interface BookDAO {
 
     Book getBook( int bookID );
 
-    Book getBookByTitle (String bookTitle );
-
-    Book getBooksByAuthor ( String authorName );
-
-    Book getBooksByGenre ( String genreType );
-
 }
