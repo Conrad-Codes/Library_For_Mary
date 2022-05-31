@@ -28,7 +28,7 @@ public class BookController {
 //        return bookDAO.getBook( param );
 //    }
 
-    @RequestMapping( path = "/book/{id}", method = RequestMethod.GET )
+    @RequestMapping( path = "/books/{id}", method = RequestMethod.GET )
     public Book getBookByID(@PathVariable int id ) {
         return bookDAO.getBook( id );
     }
