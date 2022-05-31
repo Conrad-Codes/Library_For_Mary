@@ -42,7 +42,7 @@ export default {
   },
   data(){
     return {
-      // selectedSearch : '',
+    
       searchTerm: '',
       id: '',
       filter: {
@@ -106,9 +106,7 @@ export default {
 
 
 </script>
-<style scoped>
+<style>
 
-#home{
-  color: rgb(81, 177, 145);
-}
+
 </style>
