@@ -21,6 +21,9 @@ public class Book {
     private LocalDate initialPublishDate;
     @JsonProperty("cover_art")
     private String imgUrl;
+    @JsonProperty("series")
+    private String series;
+
 
     public Book() {};
 
@@ -86,6 +89,14 @@ public class Book {
 
     public void setImgUrl(String imgUrl) {
         this.imgUrl = imgUrl;
+    }
+
+    public String getSeries() {
+        return series;
+    }
+
+    public void setSeries(String series) {
+        this.series = series;
     }
 
     @Override
