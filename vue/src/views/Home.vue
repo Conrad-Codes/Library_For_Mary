@@ -22,10 +22,13 @@
   <button type="search" v-on:click="searchBooks">Search Library</button>
   <input type="text" v-model='searchTerm'>
   </div>
-  <ol>
-  
-    {{bookList}}
-  </ol>
+ <div> 
+ <div>
+   <book-list />
+ </div>
+
+
+ </div>
 
 </div>
   
@@ -34,10 +37,11 @@
 
 <script>
 import BookService from '../services/BookService';
-
+import BookList from '../components/BookList';
 export default {
   name: "home",
   components: {
+    BookList
 
   },
   data(){

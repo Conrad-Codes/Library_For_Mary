@@ -7,7 +7,7 @@ const http = axios.create({
 export default {
 
     getBooks(){
-        return http.get('/books');
+        return http.get('/list');
     },
 
     getBookById(bookID){
@@ -19,3 +19,16 @@ export default {
     },
 
 }
+
+// import list from 'http://localhost:8080/list'
+// export default{
+    // data(){
+//         return{
+//             myList: list
+//         }
+//     }
+// }
+
+  //  <div>
+   //     <div v-for="data in $options.myList">{{data}}</div>
+   // </div>

@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin
-@PreAuthorize( "isAuthenticated()" )
+//@PreAuthorize( "isAuthenticated()" )
 public class BookController {
     @Autowired
     UserDao userDao;
