@@ -18,4 +18,16 @@ export default {
 </script>
 
 <style>
+.card{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 5px;
+  margin: 5px;
+}
+
+.cover-art{
+  width: 250px;
+  height: 350px;
+}
 </style>

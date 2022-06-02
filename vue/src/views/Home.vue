@@ -23,18 +23,9 @@ export default {
   components: {
     Library,
   },
-  // data() {
-    
-  // },
   created() {
-    // BookService.getBooks().then((response) => {
-    //   this.books = response.data;
-    // });
   },
   methods: {
-    // showBooks(allBooks) {
-    //   document.getElementById("displayAllBooks").innerHTML = allBooks;
-    // },
 
     searchBooks() {
       this.filteredArray = this.books.filter(
@@ -43,62 +34,7 @@ export default {
     },
   },
 
-  computed: {
-    // bookList() {
-    //   let bookList = this.books;
-    //   if (
-    //     this.filter.title != "" &&
-    //     document.getElementById("titleCheckBox") != ""
-    //   ) {
-    //     bookList = bookList.filter((books) =>
-    //       books.title.toLowerCase().includes(this.filter.title.toLowerCase)
-    //     );
-    //   }
-    //   if (
-    //     this.filter.genre != "" &&
-    //     document.getElementById("genreCheckBox") != ""
-    //   ) {
-    //     bookList = bookList.filter((books) =>
-    //       books.genre.toLowerCase().includes(this.filter.genre.toLowerCase)
-    //     );
-    //   }
-    //   if (
-    //     this.filter.author != "" &&
-    //     document.getElementById("authorCheckBox") != ""
-    //   ) {
-    //     bookList = bookList.filter((books) =>
-    //       books.author.toLowerCase().includes(this.filter.author.toLowerCase)
-    //     );
-    //   }
-    //   if (
-    //     this.filter.bookID != "" &&
-    //     document.getElementById("bookIDCheckBox") != ""
-    //   ) {
-    //     bookList = bookList.filter((books) =>
-    //       books.bookID.toLowerCase().includes(this.filter.bookID.toLowerCase)
-    //     );
-    //   }
-    //   if (
-    //     this.filter.isbn != "" &&
-    //     document.getElementById("isbnCheckBox") != ""
-    //   ) {
-    //     bookList = bookList.filter((books) =>
-    //       books.isbn.toLowerCase().includes(this.filter.isbn.toLowerCase)
-    //     );
-    //   }
-    //   if (
-    //     this.filter.publishDate != "" &&
-    //     document.getElementById("publishDateCheckBox") != ""
-    //   ) {
-    //     bookList = bookList.filter((books) =>
-    //       books.publishDate
-    //         .toLowerCase()
-    //         .includes(this.filter.publishDate.toLowerCase)
-    //     );
-    //   }
-    //   return bookList;
-    // },
-  },
+  computed: {},
 };
 </script>
 <style>

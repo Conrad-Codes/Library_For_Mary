@@ -1,34 +1,71 @@
 <template>
   <div class="library">
     <form>
-      <input type="radio" id="title" name="category_search" value="title" v-model="radioVal" />
+      <input
+        type="radio"
+        id="title"
+        name="category_search"
+        value="title"
+        v-model="radioVal"
+      />
       <label for="title">Title</label>
-      
-      <input type="radio" id="author" name="category_search" value="author" v-model="radioVal" />
+
+      <input
+        type="radio"
+        id="author"
+        name="category_search"
+        value="author"
+        v-model="radioVal"
+      />
       <label for="author">Author</label>
 
-      <input type="radio" id="series" name="category_search" value="series" v-model="radioVal" />
+      <input
+        type="radio"
+        id="series"
+        name="category_search"
+        value="series"
+        v-model="radioVal"
+      />
       <label for="series">Series</label>
 
-      <input type="radio" id="genre" name="category_search" value="genre" v-model="radioVal" />
+      <input
+        type="radio"
+        id="genre"
+        name="category_search"
+        value="genre"
+        v-model="radioVal"
+      />
       <label for="genre">Genre</label>
-      
-      <input type="radio" id="publishDate" name="category_search" value="publishDate" v-model="radioVal" />
+
+      <input
+        type="radio"
+        id="publishDate"
+        name="category_search"
+        value="publishDate"
+        v-model="radioVal"
+      />
       <label for="publishDate">Date Published</label>
-      
-      <input type="radio" id="isbn" name="category_search" value="isbn" v-model="radioVal" />
+
+      <input
+        type="radio"
+        id="isbn"
+        name="category_search"
+        value="isbn"
+        v-model="radioVal"
+      />
       <label for="isbn">ISBN-13</label>
-    
     </form>
-    
+
     <div id="searchOptions">
       <input type="text" v-model="searchTerm" placeholder="Search" />
     </div>
-    <book-card
-      v-for="book in bookList"
-      v-bind:book="book"
-      v-bind:key="book.id"
-    />
+    <div class="book-container">
+      <book-card
+        v-for="book in bookList"
+        v-bind:book="book"
+        v-bind:key="book.id"
+      />
+    </div>
   </div>
 </template>
 
@@ -46,7 +83,7 @@ export default {
       radioVal: "title",
       books: [],
       searchTerm: "",
-      id: ""
+      id: "",
     };
   },
   computed: {
@@ -114,4 +151,14 @@ export default {
 </script>
 
 <style>
+div.book-container {
+  display: flex;
+  justify-content:start;
+  flex-wrap: wrap;
+}
+
+div.card {
+   border: solid black 2px;
+   width: 350px;
+}
 </style>
