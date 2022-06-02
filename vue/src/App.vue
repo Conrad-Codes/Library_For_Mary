@@ -26,7 +26,7 @@
 
 .homeButton{
   color: #026670;
-  font-size: 25px;
+  
   
   
 }

@@ -15,7 +15,7 @@ public class Book {
     private List<String> authors;
     private String isbn;
     @JsonProperty("genre_name")
-    private List<String> genres;
+    private String genre;
     private String description;
     @JsonProperty("published_date")
     private LocalDate initialPublishDate;
@@ -59,12 +59,12 @@ public class Book {
         this.isbn = isbn;
     }
 
-    public List <String> getGenres() {
-        return genres;
+    public String getGenre() {
+        return this.genre;
     }
 
-    public void setGenres(List <String> genres) {
-        this.genres = genres;
+    public void setGenre(String genre) {
+        this.genre = genre;
     }
 
     public String getDescription() {
@@ -98,6 +98,8 @@ public class Book {
     public void setSeries(String series) {
         this.series = series;
     }
+
+
 
     @Override
     public String toString() {
