@@ -89,46 +89,46 @@ export default {
           books.title.toLowerCase().includes(this.searchTerm.toLowerCase())
         );
       }
-      if (
-        this.filter.genre != "" &&
-        document.getElementById("genreCheckBox") != ""
-      ) {
+
+      if ( this.filter.genre === true ) {
+        bookList = bookList.filter( (books) => {
+          const bookGenres = books.genre_name;
+          for( const genres of bookGenres ) {
+            if( genres.toLowerCase().includes( this.searchTerm.toLowerCase() ) ) {
+              return books;
+            }
+          }
+        } );
+      }
+
+      if ( this.filter.author === true ) { 
+        bookList = bookList.filter( (books) => {
+          const bookAuthors = books.author_name;
+          for( const authors of bookAuthors ) {
+            if( authors.toLowerCase().includes( this.searchTerm.toLowerCase() ) ) {
+              return books;
+            }
+          }
+        } );
+      }
+
+      if ( this.filter.bookID === true ) {
         bookList = bookList.filter((books) =>
-          books.genre.toLowerCase().includes(this.filter.genre.toLowerCase)
+          books.book_id.toString().includes( this.searchTerm )
         );
       }
-      if (
-        this.filter.author != "" &&
-        document.getElementById("authorCheckBox") != ""
-      ) {
+
+      if ( this.filter.isbn === true ) {
         bookList = bookList.filter((books) =>
-          books.author.toLowerCase().includes(this.filter.author.toLowerCase)
+          books.isbn.toLowerCase()
+          .includes(this.searchTerm.toLowerCase())
         );
       }
-      if (
-        this.filter.bookID != "" &&
-        document.getElementById("bookIDCheckBox") != ""
-      ) {
+
+      if ( this.filter.publishDate === true ) {
         bookList = bookList.filter((books) =>
-          books.bookID.toLowerCase().includes(this.filter.bookID.toLowerCase)
-        );
-      }
-      if (
-        this.filter.isbn != "" &&
-        document.getElementById("isbnCheckBox") != ""
-      ) {
-        bookList = bookList.filter((books) =>
-          books.isbn.toLowerCase().includes(this.filter.isbn.toLowerCase)
-        );
-      }
-      if (
-        this.filter.publishDate != "" &&
-        document.getElementById("publishDateCheckBox") != ""
-      ) {
-        bookList = bookList.filter((books) =>
-          books.publishDate
-            .toLowerCase()
-            .includes(this.filter.publishDate.toLowerCase)
+          books.published_date.toLowerCase()
+            .includes(this.searchTerm.toLowerCase())
         );
       }
       return bookList;
@@ -141,13 +141,7 @@ export default {
     });
   },
 
-  methods: {
-    // listAllBooks() {
-    //     bookService.getBooks().then( response => {
-    //         this.listBooks = response.data;
-    //     } )
-    // }
-  },
+  methods: {},
 };
 </script>
 
