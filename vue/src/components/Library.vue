@@ -1,59 +1,34 @@
 <template>
   <div class="library">
     <form>
-      <input
-        type="checkbox"
-        v-model="filter.title"
-        id="titleCheckBox"
-        name="Title"
-        value=""
-      />
-      <label for="titleCheckbox">Title </label>
-      <input
-        type="checkbox"
-        v-model="filter.genre"
-        id="genreCheckBox"
-        name="Genre"
-        value=""
-      />
-      <label for="genreCheckbox">Genre </label>
-      <input
-        type="checkbox"
-        v-model="filter.author"
-        id="authorCheckBox"
-        name="Author"
-        value=""
-      />
-      <label for="AuthorCheckbox">Author </label>
-      <input
-        type="checkbox"
-        v-model="filter.bookID"
-        id="bookIDCheckBox"
-        name="bookID"
-        value=""
-      />
-      <label for="bookIDCheckbox">BookID </label>
-      <input
-        type="checkbox"
-        v-model="filter.isbn"
-        id="isbnCheckBox"
-        name="Isbn"
-        value=""
-      />
-      <label for="isbnCheckbox">ISBN </label>
-      <input
-        type="checkbox"
-        v-model="filter.publishDate"
-        id="publishDateCheckBox"
-        name="PublishDate"
-        value=""
-      />
-      <label for="publishDate">PublishDate</label>
+      <input type="radio" id="title" name="category_search" value="title" v-model="radioVal" />
+      <label for="title">Title</label>
+      
+      <input type="radio" id="author" name="category_search" value="author" v-model="radioVal" />
+      <label for="author">Author</label>
+
+      <input type="radio" id="series" name="category_search" value="series" v-model="radioVal" />
+      <label for="series">Series</label>
+
+      <input type="radio" id="genre" name="category_search" value="genre" v-model="radioVal" />
+      <label for="genre">Genre</label>
+      
+      <input type="radio" id="publishDate" name="category_search" value="publishDate" v-model="radioVal" />
+      <label for="publishDate">Date Published</label>
+      
+      <input type="radio" id="isbn" name="category_search" value="isbn" v-model="radioVal" />
+      <label for="isbn">ISBN-13</label>
+    
     </form>
+    
     <div id="searchOptions">
-      <input type="text" v-model="searchTerm" />
+      <input type="text" v-model="searchTerm" placeholder="Search" />
     </div>
-    <book-card v-for="book in bookList" v-bind:book="book" v-bind:key="book.id" />
+    <book-card
+      v-for="book in bookList"
+      v-bind:book="book"
+      v-bind:key="book.id"
+    />
   </div>
 </template>
 
@@ -68,73 +43,60 @@ export default {
   },
   data() {
     return {
+      radioVal: "title",
       books: [],
       searchTerm: "",
-      id: "",
-      filter: {
-        title: false,
-        genre: false,
-        author: false,
-        bookID: false,
-        isbn: false,
-        publishDate: false,
-      },
+      id: ""
     };
   },
   computed: {
     bookList() {
       let bookList = this.books;
-      if (this.filter.title === true) {
-        this.turnAllFalse( 'title' );
+      if (this.radioVal === "title") {
         bookList = bookList.filter((books) =>
           books.title.toLowerCase().includes(this.searchTerm.toLowerCase())
         );
       }
 
-      if ( this.filter.genre === true ) {
-        this.turnAllFalse( 'genre' );
-        bookList = bookList.filter( (books) => {
+      if (this.radioVal === "genre") {
+        bookList = bookList.filter((books) => {
           const bookGenres = books.genre_name;
-          for( const genres of bookGenres ) {
-            if( genres.toLowerCase().includes( this.searchTerm.toLowerCase() ) ) {
+          for (const genres of bookGenres) {
+            if (genres.toLowerCase().includes(this.searchTerm.toLowerCase())) {
               return books;
             }
           }
-        } );
+        });
       }
 
-      if ( this.filter.author === true ) { 
-        this.turnAllFalse( 'author' );
-        bookList = bookList.filter( (books) => {
+      if (this.radioVal === "author") {
+        bookList = bookList.filter((books) => {
           const bookAuthors = books.author_name;
-          for( const authors of bookAuthors ) {
-            if( authors.toLowerCase().includes( this.searchTerm.toLowerCase() ) ) {
+          for (const authors of bookAuthors) {
+            if (authors.toLowerCase().includes(this.searchTerm.toLowerCase())) {
               return books;
             }
           }
-        } );
+        });
       }
 
-      if ( this.filter.bookID === true ) {
-        this.turnAllFalse( 'bookID' );
+      if (this.radioVal === "isbn") {
         bookList = bookList.filter((books) =>
-          books.book_id.toString().includes( this.searchTerm )
+          books.isbn.toLowerCase().includes(this.searchTerm.toLowerCase())
         );
       }
 
-      if ( this.filter.isbn === true ) {
-        this.turnAllFalse( 'isbn' );
+      if (this.radioVal === "publishDate") {
         bookList = bookList.filter((books) =>
-          books.isbn.toLowerCase()
-          .includes(this.searchTerm.toLowerCase())
-        );
-      }
-
-      if ( this.filter.publishDate === true ) {
-        this.turnAllFalse( 'publishDate' );
-        bookList = bookList.filter((books) =>
-          books.published_date.toLowerCase()
+          books.published_date
+            .toLowerCase()
             .includes(this.searchTerm.toLowerCase())
+        );
+      }
+
+      if (this.radioVal === "series") {
+        bookList = bookList.filter((books) =>
+          books.series.toLowerCase().includes(this.searchTerm.toLowerCase())
         );
       }
       return bookList;
@@ -147,15 +109,7 @@ export default {
     });
   },
 
-  methods: {
-    turnAllFalse( filterName ) { // works but theres bug that you can only check left to right after pressing one
-      for( const property in this.filter ) {
-        if( property !== filterName && this.filter[ property ] === true ) {
-            this.filter[property] = false;
-        }
-      }
-    }
-  },
+  methods: {},
 };
 </script>
 

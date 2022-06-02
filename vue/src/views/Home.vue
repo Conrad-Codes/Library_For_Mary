@@ -23,9 +23,9 @@ export default {
   components: {
     Library,
   },
-  data() {
+  // data() {
     
-  },
+  // },
   created() {
     // BookService.getBooks().then((response) => {
     //   this.books = response.data;
