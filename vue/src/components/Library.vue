@@ -72,12 +72,12 @@ export default {
       searchTerm: "",
       id: "",
       filter: {
-        title: "",
-        genre: "",
-        author: "",
-        bookID: "",
-        isbn: "",
-        publishDate: "",
+        title: false,
+        genre: false,
+        author: false,
+        bookID: false,
+        isbn: false,
+        publishDate: false,
       },
     };
   },
@@ -85,12 +85,14 @@ export default {
     bookList() {
       let bookList = this.books;
       if (this.filter.title === true) {
+        this.turnAllFalse( 'title' );
         bookList = bookList.filter((books) =>
           books.title.toLowerCase().includes(this.searchTerm.toLowerCase())
         );
       }
 
       if ( this.filter.genre === true ) {
+        this.turnAllFalse( 'genre' );
         bookList = bookList.filter( (books) => {
           const bookGenres = books.genre_name;
           for( const genres of bookGenres ) {
@@ -102,6 +104,7 @@ export default {
       }
 
       if ( this.filter.author === true ) { 
+        this.turnAllFalse( 'author' );
         bookList = bookList.filter( (books) => {
           const bookAuthors = books.author_name;
           for( const authors of bookAuthors ) {
@@ -113,12 +116,14 @@ export default {
       }
 
       if ( this.filter.bookID === true ) {
+        this.turnAllFalse( 'bookID' );
         bookList = bookList.filter((books) =>
           books.book_id.toString().includes( this.searchTerm )
         );
       }
 
       if ( this.filter.isbn === true ) {
+        this.turnAllFalse( 'isbn' );
         bookList = bookList.filter((books) =>
           books.isbn.toLowerCase()
           .includes(this.searchTerm.toLowerCase())
@@ -126,6 +131,7 @@ export default {
       }
 
       if ( this.filter.publishDate === true ) {
+        this.turnAllFalse( 'publishDate' );
         bookList = bookList.filter((books) =>
           books.published_date.toLowerCase()
             .includes(this.searchTerm.toLowerCase())
@@ -141,7 +147,15 @@ export default {
     });
   },
 
-  methods: {},
+  methods: {
+    turnAllFalse( filterName ) { // works but theres bug that you can only check left to right after pressing one
+      for( const property in this.filter ) {
+        if( property !== filterName && this.filter[ property ] === true ) {
+            this.filter[property] = false;
+        }
+      }
+    }
+  },
 };
 </script>
 
