@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="home">
+    <div class="header">
       <h1>Welcome to Mary's Magnificent Library</h1>
       <p>Use our search bar to see all the wonderful books Mary offers!</p>
     </div>

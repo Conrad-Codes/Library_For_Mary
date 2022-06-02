@@ -10,4 +10,6 @@ public interface BookDAO {
 
     Book getBook( int bookID );
 
+    void addBook(Book book);
+
 }
