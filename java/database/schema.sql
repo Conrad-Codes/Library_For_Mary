@@ -11,10 +11,9 @@ DROP TABLE IF EXISTS book_comment;
 DROP TABLE IF EXISTS book CASCADE;
 DROP TABLE IF EXISTS users CASCADE;
 DROP TABLE IF EXISTS series;
-DROP TABLE IF EXISTS forum_topic;
 DROP TABLE IF EXISTS forum_post;
+DROP TABLE IF EXISTS forum_topic;
 DROP SEQUENCE IF EXISTS seq_user_id;
-
 CREATE SEQUENCE seq_user_id
   INCREMENT BY 1
   NO MAXVALUE
@@ -93,6 +92,7 @@ CREATE TABLE reading_list (
 	reading_list_entry_id serial,
 	list_id int,
 	book_id int,
+	is_being_read boolean,
 	constraint pk_reading_list_id primary key (reading_list_entry_id),
 	constraint fk_book_book_id foreign key (book_id) references book(book_id),
 	constraint fk_user_reading_list_list_id foreign key (list_id) references user_reading_list(list_id)
