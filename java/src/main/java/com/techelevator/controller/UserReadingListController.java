@@ -47,4 +47,13 @@ public class UserReadingListController {
                 userDao.findIdByUsername(principal.getName()), book.getId()
         );
     }
+
+    @RequestMapping(path = "/user/currently-reading", method = RequestMethod.GET)
+    public List <Book> getUserCurrentlyReading(Principal principal) {
+        return userReadingListDAO.getUserCurrentlyReading(
+                userDao.findIdByUsername(principal.getName())
+        );
+    }
+
+
 }

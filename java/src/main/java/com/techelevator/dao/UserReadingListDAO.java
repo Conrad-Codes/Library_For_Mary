@@ -12,4 +12,9 @@ public interface UserReadingListDAO {
 
     public boolean deleteBookFromUserReadingList( int userID, int bookID );
 
+    public boolean updateReadingList (int userID, int bookID);
+
+    public List <Book> getUserCurrentlyReading (int userID);
 }
+
+

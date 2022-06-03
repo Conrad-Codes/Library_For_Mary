@@ -73,6 +73,30 @@ public class UserReadingListDAOJdbc implements UserReadingListDAO {
         return jdbcTemplate.update( sql, userID, bookID ) == 1;
     }
 
+    @Override
+    public boolean updateReadingList(int userID, int bookID) {
+        return false;
+    }
+
+    @Override
+    public List<Book> getUserCurrentlyReading(int userID) {
+        List <Book> currentReadingList = new ArrayList<>();
+        String sql = "SELECT book.book_id, book.title, book.description\n" +
+                ", book.published_date, book.cover_art, book.series_id, book.genre_id\n" +
+                "FROM users\n" +
+                "JOIN user_reading_list\n" +
+                "ON users.user_id = user_reading_list.user_id\n" +
+                "JOIN reading_list ON reading_list.list_id = user_reading_list.list_id\n" +
+                "JOIN book ON reading_list.book_id = book.book_id\n" +
+                "WHERE users.user_id = ? AND reading_list.is_being_read = true;";
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, userID);
+        while( results.next() ) {
+            Book book = mapRowToBook(results);
+            currentReadingList.add(book);
+        }
+        return currentReadingList;
+    }
+
     private List <String> listOfAuthorsByBookID( int bookID ) {
         List <String> authors = new ArrayList<>();
         String sql = "SELECT author_name FROM author "

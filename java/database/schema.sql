@@ -178,7 +178,7 @@ INSERT INTO user_reading_list (user_id)
 VALUES (1),(2);
 
 INSERT INTO reading_list(list_id, book_id, is_being_read)
-VALUES (1, 1, false), (1,2, true), (1,3, false), (2, 6,true), (2,11, false);
+VALUES (1, 1, FALSE), (1,2, TRUE), (1,3, FALSE), (2, 6,TRUE), (2,11, FALSE);
 
 INSERT INTO forum_topic (topic_name, user_id, topic_date)
 VALUES ('Better: Tolkien or Martin?', 1, '2021-05-25'), ('Where the wild things AREN''T!', 1, '2010-03-15');
