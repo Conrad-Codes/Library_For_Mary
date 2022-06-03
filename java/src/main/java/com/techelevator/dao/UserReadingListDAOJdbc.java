@@ -75,7 +75,21 @@ public class UserReadingListDAOJdbc implements UserReadingListDAO {
 
     @Override
     public boolean updateReadingList(int userID, int bookID) {
-        return false;
+        boolean isReading;
+
+        String findRead = "SELECT is_being_read FROM reading_list WHERE book_id = ? " +
+                "AND list_id = ( SELECT list_id FROM user_reading_list WHERE user_id = ?)";
+        SqlRowSet findReadBoolean = jdbcTemplate.queryForRowSet( findRead, bookID, userID );
+        if( findReadBoolean.next() ) {
+            isReading = !findReadBoolean.getBoolean("is_being_read");
+        }
+        else {
+            return false;
+        }
+
+        String sql = "UPDATE reading_list SET is_being_read = ? WHERE book_id = ? " +
+                "AND list_id = ( SELECT list_id FROM user_reading_list WHERE user_id = ?)";
+        return jdbcTemplate.update( sql, isReading, bookID, userID ) == 1;
     }
 
     @Override
