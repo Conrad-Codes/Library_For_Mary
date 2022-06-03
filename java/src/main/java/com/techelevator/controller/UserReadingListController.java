@@ -5,11 +5,9 @@ import com.techelevator.dao.UserDao;
 import com.techelevator.dao.UserReadingListDAO;
 import com.techelevator.model.Book;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.List;
@@ -30,7 +28,16 @@ public class UserReadingListController {
 
     @RequestMapping(path = "/user/list", method = RequestMethod.GET )
     public List<Book> getUserReadingList(Principal principal) {
-        return userReadingListDAO.getUserReadingList(userDao.findIdByUsername(principal.getName()));
+        return userReadingListDAO.getUserReadingList(
+                userDao.findIdByUsername(principal.getName())
+        );
     }
 
+    @ResponseStatus( HttpStatus.CREATED )
+    @RequestMapping( path = "/user/add-book", method = RequestMethod.POST )
+    public void addBookToUserReadingList( Principal principal, @RequestBody Book book ) {
+        userReadingListDAO.addBookToUserReadingList(
+                userDao.findIdByUsername(principal.getName()), book.getId()
+        );
+    }
 }
