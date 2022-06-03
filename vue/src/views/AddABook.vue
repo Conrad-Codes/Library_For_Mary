@@ -7,14 +7,19 @@
 <script>
 import NewBookForm from '../components/NewBookForm.vue';
 
+
+
 export default {
     name: "add-book",
     components: {
-        NewBookForm
+        NewBookForm,
+    
     },
+    
     created(){
         
     }
-}
+ }
+
 </script>
 
