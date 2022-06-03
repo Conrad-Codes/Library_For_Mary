@@ -19,7 +19,7 @@ export default {
     },
 
     createBook(newBook){
-        return http.post('/list', newBook)
+        return http.post('/add-book', newBook)
     }
 
 }

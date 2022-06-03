@@ -1,6 +1,6 @@
 <template>
 <div>
-    <h1> Add A New Book </h1>
+    <h1> Welcome Admin! </h1>
     <new-book-form/>
 </div>
 </template>

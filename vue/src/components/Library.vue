@@ -60,7 +60,7 @@
     </div>
   <div>
     <br>
-    <new-book-form/>
+    <!-- <new-book-form/> -->
   </div> 
   </div>
 </template>
@@ -68,13 +68,13 @@
 <script>
 import bookService from "../services/BookService";
 import BookCard from "../components/BookCard";
-import NewBookForm from '../components/NewBookForm.vue';
+// import NewBookForm from '../components/NewBookForm.vue';
 
 export default {
   name: "library",
   components: {
     BookCard,
-    NewBookForm,
+    // NewBookForm,
   },
   data() {
     return {

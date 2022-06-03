@@ -1,5 +1,5 @@
 <template>
-  <form class="new-book-form" v-on:submit.prevent="saveBook">
+  <form class="new-book-form"  v-on:click="addABook" v-on:submit.prevent="saveBook">
       <legend>Add a Book:</legend>
       <br>
       <label id="titleLabel" for="title">Title:</label><br>
@@ -11,9 +11,9 @@
       <label for="genre">Genre:</label><br>
       <input class="genre-input" type="text" placeholder="Genre" v-model="book.genre"/><br>
       <label for="datePublished">Date Published:</label><br>
-      <input class="datePublished-input" type="text" placeholder="YYY-MM-DD" v-model="book.datePublished"/><br>
+      <input class="datePublished-input" type="text" placeholder="YYYY-MM-DD" v-model="book.datePublished"/><br>
       <br>
-      <button>Submit</button>
+      <button @click="goToHome">Submit</button>
   </form>
 </template>
 
@@ -43,7 +43,10 @@ export default {
                 genre: '',
                 datePublished: ''
            };
-           this.$router.push('/');
+           this.$router.push('/add-book');
+        },
+        goToHome() {
+            this.$router.push('/')
         }
     }
 }
