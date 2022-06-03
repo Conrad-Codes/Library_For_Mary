@@ -15,6 +15,7 @@
     <div id="nav">
       <router-link class="homeButton" v-bind:to="{ name: 'home' }">Home</router-link>&nbsp;|&nbsp;
       <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''">Logout</router-link>
+      <router-link class="addABook" v-bind:to="{name: NewBookForm }">Add a Book</router-link>
     </div>
     <router-view />
   </div>
