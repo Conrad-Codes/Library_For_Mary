@@ -11,6 +11,8 @@ DROP TABLE IF EXISTS book_comment;
 DROP TABLE IF EXISTS book CASCADE;
 DROP TABLE IF EXISTS users CASCADE;
 DROP TABLE IF EXISTS series;
+DROP TABLE IF EXISTS forum_topic;
+DROP TABLE IF EXISTS forum_post;
 DROP SEQUENCE IF EXISTS seq_user_id;
 
 CREATE SEQUENCE seq_user_id
@@ -96,6 +98,26 @@ CREATE TABLE reading_list (
 	constraint fk_user_reading_list_list_id foreign key (list_id) references user_reading_list(list_id)
 );
 
+CREATE TABLE forum_topic (
+	topic_id serial,
+	topic_name varchar,
+	user_id int,
+	topic_date date,
+	constraint pk_topic_id primary key (topic_id),
+	constraint fk_users_user_id foreign key (user_id) references users(user_id)	
+);
+
+CREATE TABLE forum_post (
+	post_id serial,
+	topic_id int,
+	post varchar, 
+	user_id int,
+	post_date date,
+	constraint pk_post_id primary key (post_id),
+	constraint fk_users_user_id foreign key (user_id) references users(user_id),
+	constraint fk_forum_topic_topic_id foreign key (topic_id) references forum_topic(topic_id)
+);
+
 -- CREATE TABLE book_comment (
 -- 	comment_id serial,
 -- 	book_id int,
@@ -158,4 +180,13 @@ VALUES (1),(2);
 INSERT INTO reading_list(list_id, book_id)
 VALUES (1, 1), (1,2), (1,3), (2, 6), (2,11);
 
+INSERT INTO forum_topic (topic_name, user_id, topic_date)
+VALUES ('Better: Tolkien or Martin?', 1, '2021-05-25'), ('Where the wild things AREN''T!', 1, '2010-03-15');
+
+INSERT INTO forum_post (topic_id, post, user_id, post_date)
+VALUES (1, 'Tolkien rocks Middle Earth like mount Doom erupting', 1, '2021-05-25'), 
+	   (1, 'Martin is a master of plot disguise',2,'2021-06-01'),
+	   (2, 'Why doesn''t Gandalf ride a unicorn?', 1, '2011-05-10'),
+	   (2, 'I think a draccus could totally take out a grolm!', 2, '2012-07-04');
+	   
 COMMIT TRANSACTION;
