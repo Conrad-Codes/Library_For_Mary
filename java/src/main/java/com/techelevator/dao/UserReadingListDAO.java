@@ -8,5 +8,6 @@ public interface UserReadingListDAO {
 
     public List<Book> getUserReadingList( int userID );
 
+    public void addBookToUserReadingList( int userID, int bookID );
 
 }

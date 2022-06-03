@@ -36,6 +36,12 @@ public class UserReadingListDAOJdbc implements UserReadingListDAO {
         return usersReadingList;
     }
 
+    @Override
+    public void addBookToUserReadingList(int userID, int bookID) {
+        String sql = "";
+        jdbcTemplate.update( sql, userID, bookID );
+    }
+
     private List <String> listOfAuthorsByBookID( int bookID ) {
         List <String> authors = new ArrayList<>();
         String sql = "SELECT author_name FROM author "
