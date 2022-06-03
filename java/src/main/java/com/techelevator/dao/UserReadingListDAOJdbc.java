@@ -37,10 +37,40 @@ public class UserReadingListDAOJdbc implements UserReadingListDAO {
     }
 
     @Override
-    public void addBookToUserReadingList(int userID, int bookID) {
+    public boolean addBookToUserReadingList(int userID, int bookID) {
+        List<Book> userReadList = getUserReadingList( userID );
+        for( Book book : userReadList ) {
+            if( book.getId() == bookID ) {
+                return false;
+            }
+        }
+
         String sql = "INSERT INTO reading_list ( list_id, book_id )\n" +
                 "VALUES ( ( SELECT list_id FROM user_reading_list WHERE user_id = ? ), ? );";
-        jdbcTemplate.update( sql, userID, bookID );
+
+        return jdbcTemplate.update( sql, userID, bookID ) == 1;
+    }
+
+    @Override
+    public boolean deleteBookFromUserReadingList(int userID, int bookID) {
+        List<Book> userReadList = getUserReadingList( userID );
+        int foundBook = 0;
+
+        for( Book book : userReadList ) {
+            if( book.getId() == bookID ) {
+                foundBook++;
+            }
+        }
+
+        if( foundBook < 1 ) {
+            return false;
+        }
+
+        String sql = "DELETE FROM reading_list \n" +
+                "WHERE list_id = ( SELECT list_id FROM user_reading_list WHERE user_id = ? )\n" +
+                "\tAND book_id = ?;";
+
+        return jdbcTemplate.update( sql, userID, bookID ) == 1;
     }
 
     private List <String> listOfAuthorsByBookID( int bookID ) {

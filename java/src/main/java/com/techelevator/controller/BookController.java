@@ -34,6 +34,7 @@ public class BookController {
         return bookDAO.listBooks();
     }
 
+//    @PreAuthorize("hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping( path= "/add-book", method = RequestMethod.POST )
     public void addBook(@RequestBody Book book) {

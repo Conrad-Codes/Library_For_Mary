@@ -52,6 +52,50 @@ public class BookDAOJdbc implements BookDAO {
         return foundBook;
     }
 
+    @Override
+    public void addBook(Book book){
+        List<String> genre_names = getGenreTableNames();
+        List<String> seriesNames = getSeriesTableNames();
+        List<String> authorNames = getAuthorTableNames();
+
+        if (!seriesNames.contains(book.getSeries().toLowerCase() )) {
+            String sql1 = "INSERT INTO series(series_name)"+
+                    "VALUES(?);";
+            jdbcTemplate.update(sql1,book.getSeries());
+        }
+        int seriesId = getSeriesId(book.getSeries());
+
+        if (!genre_names.contains(book.getGenre().toLowerCase() )) {
+            String sql1 = "INSERT INTO genre(genre_name)"+
+                    "VALUES(?);";
+            jdbcTemplate.update(sql1,book.getGenre());
+        }
+
+        int genreId = getGenreId(book.getGenre());
+
+        String sql = "INSERT INTO  book (title, description, published_date, cover_art, series_id, genre_id)"+
+                "VALUES (?,?,?,?,?,?);";
+
+        jdbcTemplate.update(sql, book.getTitle(), book.getDescription(), book.getInitialPublishDate(),
+                book.getImgUrl(), seriesId, genreId );
+
+        int bookId = getBookIdByTitle(book.getTitle());
+
+        for (String author : book.getAuthors()) {
+            if (!authorNames.contains(author.toLowerCase())) {
+                String sql1 = "INSERT INTO author(author_name)" +
+                        "VALUES(?);";
+                jdbcTemplate.update(sql1, author);
+            }
+
+            String sql2 = "INSERT INTO book_author (author_id, book_id) "+
+                    "VALUES (?, ?);";
+
+            jdbcTemplate.update(sql2, getAuthorId(author), bookId);
+        }
+
+    }
+
     private List <String> listOfAuthorsByBookID( int bookID ) {
         List <String> authors = new ArrayList<>();
         String sql = "SELECT author_name FROM author "
@@ -121,7 +165,7 @@ public class BookDAOJdbc implements BookDAO {
         return authorNames;
     }
 
-    public int getGenreId(String genre_name) {
+    private int getGenreId(String genre_name) {
         int genreId = -1;
         String sql = "SELECT genre_id FROM genre WHERE genre_name = ?";
 
@@ -133,7 +177,7 @@ public class BookDAOJdbc implements BookDAO {
         return genreId;
     }
 
-    public int getSeriesId(String series_name) {
+    private int getSeriesId(String series_name) {
         int seriesId = -1;
         String sql = "SELECT series_id FROM series WHERE series_name = ?";
 
@@ -145,7 +189,7 @@ public class BookDAOJdbc implements BookDAO {
         return seriesId;
     }
 
-    public int getAuthorId(String author_name){
+    private int getAuthorId(String author_name){
         int authorId = -1;
 
         String sql1 = "SELECT author_id FROM author WHERE author_name = ?;";
@@ -158,7 +202,7 @@ public class BookDAOJdbc implements BookDAO {
         return authorId;
     }
 
-    public int getBookIdByTitle(String title){
+    private int getBookIdByTitle(String title){
         int bookId = -1;
 
         String sql = "SELECT book_id FROM book WHERE title = ?;";
@@ -169,50 +213,6 @@ public class BookDAOJdbc implements BookDAO {
             bookId = result.getInt("book_id");
         }
         return bookId;
-    }
-
-
-    @Override
-    public void addBook(Book book){
-        List<String> genre_names = getGenreTableNames();
-        List<String> seriesNames = getSeriesTableNames();
-        List<String> authorNames = getAuthorTableNames();
-
-        if (!seriesNames.contains(book.getSeries().toLowerCase() )) {
-            String sql1 = "INSERT INTO series(series_name)"+
-                    "VALUES(?);";
-            jdbcTemplate.update(sql1,book.getSeries());
-        }
-        int seriesId = getSeriesId(book.getSeries());
-
-        if (!genre_names.contains(book.getGenre().toLowerCase() )) {
-            String sql1 = "INSERT INTO genre(genre_name)"+
-                    "VALUES(?);";
-            jdbcTemplate.update(sql1,book.getGenre());
-        }
-
-        int genreId = getGenreId(book.getGenre());
-
-        String sql = "INSERT INTO  book (title, description, published_date, cover_art, series_id, genre_id)"+
-                    "VALUES (?,?,?,?,?,?);";
-
-        jdbcTemplate.update(sql, book.getTitle(), book.getDescription(), book.getInitialPublishDate(),book.getImgUrl(), seriesId, genreId );
-
-        int bookId = getBookIdByTitle(book.getTitle());
-
-        for (String author : book.getAuthors()) {
-            if (!authorNames.contains(author.toLowerCase())) {
-                String sql1 = "INSERT INTO author(author_name)" +
-                        "VALUES(?);";
-                jdbcTemplate.update(sql1, author);
-            }
-
-            String sql2 = "INSERT INTO book_author (author_id, book_id) "+
-                        "VALUES (?, ?);";
-
-            jdbcTemplate.update(sql2, getAuthorId(author), bookId);
-        }
-
     }
 
     private Book mapRowToBook(SqlRowSet rowSet) {
