@@ -1,6 +1,6 @@
 <template>
   <div class="library">
-    <form>
+    <form id="filterOptions">
       <input
         type="radio"
         id="title"
@@ -46,14 +46,6 @@
       />
       <label for="publishDate">Date Published</label>
 
-      <input
-        type="radio"
-        id="isbn"
-        name="category_search"
-        value="isbn"
-        v-model="radioVal"
-      />
-      <label for="isbn">ISBN-13</label>
     </form>
 
     <div id="searchOptions">
@@ -66,17 +58,23 @@
         v-bind:key="book.id"
       />
     </div>
+  <div>
+    <br>
+    <new-book-form/>
+  </div> 
   </div>
 </template>
 
 <script>
 import bookService from "../services/BookService";
 import BookCard from "../components/BookCard";
+import NewBookForm from '../components/NewBookForm.vue';
 
 export default {
   name: "library",
   components: {
     BookCard,
+    NewBookForm,
   },
   data() {
     return {
@@ -117,12 +115,6 @@ export default {
         });
       }
 
-      if (this.radioVal === "isbn") {
-        bookList = bookList.filter((books) =>
-          books.isbn.toLowerCase().includes(this.searchTerm.toLowerCase())
-        );
-      }
-
       if (this.radioVal === "publishDate") {
         bookList = bookList.filter((books) =>
           books.published_date
@@ -158,7 +150,24 @@ div.book-container {
 }
 
 div.card {
-   border: solid black 2px;
+   border: solid #C8A2C8 2px;
    width: 350px;
+}
+
+.library{
+  background-color: #93E9BE;
+}
+
+#filterOptions{
+  position: absolute;
+  top: 4.5px;
+  right: 8px;
+}
+
+#searchOptions{
+  position: absolute;
+  top: 30px;
+  right: 12px;
+  
 }
 </style>
