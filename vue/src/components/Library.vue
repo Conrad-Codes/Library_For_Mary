@@ -160,14 +160,14 @@ div.card {
 
 #filterOptions{
   position: absolute;
-  top: 8px;
-  right: 14px;
+  top: 4.5px;
+  right: 8px;
 }
 
 #searchOptions{
   position: absolute;
-  top: 8px;
-  right: 14px;
-  padding-top: 25px;
+  top: 30px;
+  right: 12px;
+  
 }
 </style>

@@ -18,6 +18,10 @@ export default {
         
     },
 
+    createBook(newBook){
+        return http.post('/list', newBook)
+    }
+
 }
 
 // import list from 'http://localhost:8080/list'

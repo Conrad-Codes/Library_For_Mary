@@ -1,5 +1,6 @@
 <template>
-  <form class="new-book-form" v-on:submit.prevent="saveBook">
+<div></div>
+  <!-- <form class="new-book-form" v-on:submit.prevent="saveBook">
       <legend>Add a Book:</legend>
       <br>
       <label id="titleLabel" for="title">Title:</label><br>
@@ -14,7 +15,7 @@
       <input class="datePublished-input" type="text" placeholder="MM-DD-YYYY" v-model="book.datePublished"/><br>
       <br>
       <button>Submit</button>
-  </form>
+  </form> -->
 </template>
 
 <script>
@@ -36,7 +37,6 @@ export default {
         saveBook() {
            const bookID = this.$route.params.id;
            this.book.bookID = bookID
-           this.$store.commit('SAVE_BOOK', this.book);
            this.book = {
                 title: '',
                 author: '',
@@ -44,7 +44,7 @@ export default {
                 genre: '',
                 datePublished: ''
            };
-           this.$router.push({name: 'add-book', params: {id: bookID}})
+           this.$router.push('/');
         }
     }
 }

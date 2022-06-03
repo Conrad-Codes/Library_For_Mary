@@ -26,6 +26,7 @@ export default {
   padding: 5px;
   margin: 5px;
   color: black;
+  border-radius: 25px;
 }
 
 .cover-art{
