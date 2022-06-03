@@ -177,8 +177,8 @@ VALUES	(1,1), (1,2), (1,3), (2,4), (2,5), (3,5), (4,6), (5,7), (5,8), (6,9), (6,
 INSERT INTO user_reading_list (user_id)
 VALUES (1),(2);
 
-INSERT INTO reading_list(list_id, book_id)
-VALUES (1, 1), (1,2), (1,3), (2, 6), (2,11);
+INSERT INTO reading_list(list_id, book_id, is_being_read)
+VALUES (1, 1, false), (1,2, true), (1,3, false), (2, 6,true), (2,11, false);
 
 INSERT INTO forum_topic (topic_name, user_id, topic_date)
 VALUES ('Better: Tolkien or Martin?', 1, '2021-05-25'), ('Where the wild things AREN''T!', 1, '2010-03-15');
