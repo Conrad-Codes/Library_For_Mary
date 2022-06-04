@@ -1,90 +1,157 @@
 <template>
   <form class="new-book-form" v-on:submit.prevent="saveBook">
+    <div class="add-book-form">
       <legend>Add a Book:</legend>
-      <br>
-      <label id="titleLabel" for="title">Title:</label><br>
-      <input class="title-input" type="text" placeholder="Title" v-model="book.title"/><br>
-      <label for="author_name">Author:</label><br>
-      <input class="author_name-input" type="text" placeholder="Author" v-model="book.author_name"/><br>
-      <label for="series">Series:</label><br>
-      <input class="series-input" type="text" placeholder="Series" v-model="book.series"/><br>
-      <label for="genre_name">Genre:</label><br>
-      <input class="genre_name-input" type="text" placeholder="Genre" v-model="book.genre_name"/><br>
-      <label for="published_date">Date Published:</label><br>
-      <input class="published_date-input" type="date" placeholder="YYYY-MM-DD" v-model="book.published_date"/><br>
-      <label class="description">Description:</label><br>
-      <input class="description-input" type="text" placeholder="Description" v-model="book.description"/><br>
-      <label class="cover_art">Cover Art:</label><br>
-      <input class="cover_art-input" type="text" placeholder="CoverArt" v-model="book.cover_art"/><br>
-      <br>
+
+      <label id="titleLabel" for="title">Title:</label>
+      <div class="input">
+        <input
+          class="title-input"
+          type="text"
+          placeholder="Title"
+          v-model="book.title"
+        />
+      </div>
+
+      <label for="author_name">Author:</label>
+        <div v-for="(author,index) in book.author_name" v-bind:key="`author-${index}`" class="input">
+        <input
+          class="author_name-input"
+          type="text"
+          placeholder="Author"
+          v-model="book.author_name[index]"
+        />
+        <svg
+          @click="addAuthor()"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          width="24"
+          height="24"
+          class="ml-2 cursor-pointer"
+        >
+          <path fill="none" d="M0 0h24v24H0z" />
+          <path
+            fill="green"
+            d="M11 11V7h2v4h4v2h-4v4h-2v-4H7v-2h4zm1 11C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16z"
+          />
+        </svg>
+      </div>
+
+      <label for="series">Series:</label>
+      <div class="input">
+        <input
+          class="series-input"
+          type="text"
+          placeholder="Series"
+          v-model="book.series"
+        /><br />
+      </div>
+
+      <label for="genre_name">Genre:</label>
+      <div class="input">
+        <input
+          class="genre_name-input"
+          type="text"
+          placeholder="Genre"
+          v-model="book.genre_name"
+        /><br />
+      </div>
+      <label for="published_date">Date Published:</label>
+      <div class="input">
+        <input
+          class="published_date-input"
+          type="date"
+          placeholder="YYYY-MM-DD"
+          v-model="book.published_date"
+        />
+      </div>
+
+      <label class="description">Description:</label>
+      <div class="input">
+        <input
+          class="description-input"
+          type="text"
+          placeholder="Description"
+          v-model="book.description"
+        /><br />
+      </div>
+      <label class="cover_art">Cover Art:</label><br />
+      <div class="input">
+        <input
+          class="cover_art-input"
+          type="text"
+          placeholder="CoverArt"
+          v-model="book.cover_art"
+        />
+      </div>
+      <br />
       <button>Submit</button>
+    </div>
   </form>
 </template>
 
 <script>
-import BookService from '../services/BookService.js';
-
+import BookService from "../services/BookService.js";
 
 export default {
-    name: "new-book-form",
-   
-    data() {
-        return {
-            book: {
-                title: '',
-                author_name: [''],
-                series:  '',
-                genre_name: '',
-                published_date: '',
-                description: '',
-                cover_art: ''
-            }
-        }
+  name: "new-book-form",
+
+  data() {
+    return {
+      book: {
+        title: "",
+        author_name: [""],
+        series: "",
+        genre_name: "",
+        published_date: "",
+        description: "",
+        cover_art: "",
+      },
+    };
+  },
+  methods: {
+    addAuthor() {
+        this.book.author_name.push("");
     },
-    methods: {
-        saveBook() {
-            BookService
-            .createBook(this.book)
-            .then(response => {
-             if (response.status === 201) {
+    saveBook() {
+      BookService.createBook(this.book)
+        .then((response) => {
+          if (response.status === 201) {
             this.$router.push("/");
           }
         })
-        .catch(error => {
+        .catch((error) => {
           console.error(error);
         });
-        //    const bookID = this.$route.params.id;
-        //    this.book.bookID = bookID
-        //    this.book = {
-        //         title: '',
-        //         author: '',
-        //         series:  '',
-        //         genre_name: '',
-        //         datePublished: ''
-        //    };
-        //    this.$router.push('/add-book');
-        },
-        
-    }
-}
+      //    const bookID = this.$route.params.id;
+      //    this.book.bookID = bookID
+      //    this.book = {
+      //         title: '',
+      //         author: '',
+      //         series:  '',
+      //         genre_name: '',
+      //         datePublished: ''
+      //    };
+      //    this.$router.push('/add-book');
+    },
+  },
+};
 </script>
 
 <style>
-
-label{
-   font-size: 25px;
+label {
+  font-size: 25px;
 }
 
-input{
-    font-size: 25px
+input {
+  font-size: 25px;
 }
 
-legend{
-    font-size: 40px;
+legend {
+  font-size: 40px;
 }
 
-form{
-    text-align: center;
+form {
+  text-align: center;
 }
-
 </style>
