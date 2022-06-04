@@ -45,7 +45,7 @@ public class UserReadingListDAOJdbc implements UserReadingListDAO {
             }
         }
 
-        String sql = "INSERT INTO reading_list ( list_id, book_id )\n" +
+        String sql = "INSERT INTO reading_list ( list_id, book_id, is_being_read )\n" +
                 "VALUES ( ( SELECT list_id FROM user_reading_list WHERE user_id = ? ), ? );";
 
         return jdbcTemplate.update( sql, userID, bookID ) == 1;

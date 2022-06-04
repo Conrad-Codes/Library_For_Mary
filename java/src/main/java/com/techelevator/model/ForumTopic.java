@@ -1,13 +1,12 @@
 package com.techelevator.model;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 public class ForumTopic {
     int topicId;
     String topicName;
     String CreatedByUsername;
-    LocalDateTime topicCreatedDate;
+    LocalDate topicCreatedDate;
 
     public int getTopicId() {
         return topicId;
@@ -33,11 +32,11 @@ public class ForumTopic {
         CreatedByUsername = createdByUsername;
     }
 
-    public LocalDateTime getTopicCreatedDate() {
+    public LocalDate getTopicCreatedDate() {
         return topicCreatedDate;
     }
 
-    public void setTopicCreatedDate(LocalDateTime topicCreatedDate) {
+    public void setTopicCreatedDate(LocalDate topicCreatedDate) {
         this.topicCreatedDate = topicCreatedDate;
     }
 }

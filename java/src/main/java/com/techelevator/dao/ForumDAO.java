@@ -7,8 +7,8 @@ import java.util.List;
 
 public interface ForumDAO {
 
-    ForumTopic getTopicByTopicId(int id);
+    ForumTopic getTopicByTopicId(int topicId);
     List<ForumTopic> getAllTopicNames();
-    List<TopicPost> getAllPostsByForumTopic(int topicId);
+    List<TopicPost> getAllPostsByForumTopicId(int topicId);
 
 }

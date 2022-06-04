@@ -92,7 +92,7 @@ CREATE TABLE reading_list (
 	reading_list_entry_id serial,
 	list_id int,
 	book_id int,
-	is_being_read boolean,
+	is_being_read boolean DEFAULT FALSE,
 	constraint pk_reading_list_id primary key (reading_list_entry_id),
 	constraint fk_book_book_id foreign key (book_id) references book(book_id),
 	constraint fk_user_reading_list_list_id foreign key (list_id) references user_reading_list(list_id)

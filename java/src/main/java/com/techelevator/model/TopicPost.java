@@ -1,13 +1,14 @@
 package com.techelevator.model;
 
-import java.time.LocalDateTime;
+
+import java.time.LocalDate;
 
 public class TopicPost {
     int postId;
     int topicId;
     String post;
     String postCreatedByUsername;
-    LocalDateTime PostCreatedDate;
+    LocalDate PostCreatedDate;
 
     public int getPostId() {
         return postId;
@@ -41,11 +42,11 @@ public class TopicPost {
         this.postCreatedByUsername = postCreatedByUsername;
     }
 
-    public LocalDateTime getPostCreatedDate() {
+    public LocalDate getPostCreatedDate() {
         return PostCreatedDate;
     }
 
-    public void setPostCreatedDate(LocalDateTime postCreatedDate) {
+    public void setPostCreatedDate(LocalDate postCreatedDate) {
         PostCreatedDate = postCreatedDate;
     }
 }

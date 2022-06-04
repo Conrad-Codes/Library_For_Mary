@@ -81,6 +81,14 @@ public class JdbcUserDao implements UserDao {
                     return ps;
                 }
                 , keyHolder) == 1;
+
+        // add new user to the user_reading_list, so they have their own reading list
+        if( userCreated ) {
+            String insertUserIntoUserReadingList = "INSERT INTO user_reading_list ( user_id ) " +
+                    "VALUES ( (SELECT user_id FROM users WHERE username = ? ) )";
+            jdbcTemplate.update( insertUserIntoUserReadingList, username );
+        }
+        
         int newUserId = (int) keyHolder.getKeys().get(id_column);
 
         return userCreated;
