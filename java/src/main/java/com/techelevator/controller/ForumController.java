@@ -5,6 +5,7 @@ import com.techelevator.dao.UserDao;
 import com.techelevator.model.ForumTopic;
 import com.techelevator.model.TopicPost;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,6 +37,7 @@ public class ForumController {
         return forumDAO.getAllPostsByForumTopicId( topicID );
     }
 
+    @ResponseStatus( HttpStatus.CREATED )
     @RequestMapping( path = "/forum/add-forum-topic", method = RequestMethod.POST )
     public boolean addForumTopic(Principal principal, @RequestBody ForumTopic forumTopic ) {
         return forumDAO.addTopicToForum(
@@ -43,4 +45,17 @@ public class ForumController {
                 , forumTopic
         );
     }
+
+    @ResponseStatus( HttpStatus.CREATED )
+    @RequestMapping( path = "/forum/topic/add-post", method = RequestMethod.POST )
+    public boolean addTopicPost( Principal principal, @RequestBody TopicPost post ) {
+        return forumDAO.addPostToTopic(
+                userDao.findIdByUsername( principal.getName() )
+                , post
+        );
+    }
+
+
+
+
 }
