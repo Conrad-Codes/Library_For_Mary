@@ -5,6 +5,9 @@ import Login from '../views/Login.vue'
 import Logout from '../views/Logout.vue'
 import Register from '../views/Register.vue'
 import store from '../store/index'
+import NewBookForm from '../views/NewBook.vue'
+// import ReadingList from '../components/ReadingList.vue'
+import SavedList from '../views/SavedList.vue'
 
 Vue.use(Router)
 
@@ -53,6 +56,22 @@ const router = new Router({
         requiresAuth: false
       }
     },
+    {
+      path: "/add-book",
+      name: 'add-book',
+      component: NewBookForm,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: "/user/list",
+      name: 'my-list',
+      component: SavedList,
+      meta: {
+        requiresAuth: true
+      }
+    }
   ]
 })
 

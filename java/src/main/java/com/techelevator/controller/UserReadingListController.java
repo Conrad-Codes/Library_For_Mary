@@ -35,9 +35,32 @@ public class UserReadingListController {
 
     @ResponseStatus( HttpStatus.CREATED )
     @RequestMapping( path = "/user/add-book", method = RequestMethod.POST )
-    public void addBookToUserReadingList( Principal principal, @RequestBody Book book ) {
-        userReadingListDAO.addBookToUserReadingList(
+    public boolean addBookToUserReadingList( Principal principal, @RequestBody Book book ) {
+        return userReadingListDAO.addBookToUserReadingList(
                 userDao.findIdByUsername(principal.getName()), book.getId()
         );
     }
+
+    @RequestMapping( path = "/user/delete-book", method = RequestMethod.DELETE )
+    public boolean deleteBookFromUserReadingList( Principal principal, @RequestBody Book book ) {
+        return userReadingListDAO.deleteBookFromUserReadingList(
+                userDao.findIdByUsername(principal.getName()), book.getId()
+        );
+    }
+
+    @RequestMapping(path = "/user/currently-reading", method = RequestMethod.GET)
+    public List <Book> getUserCurrentlyReading(Principal principal) {
+        return userReadingListDAO.getUserCurrentlyReading(
+                userDao.findIdByUsername(principal.getName())
+        );
+    }
+
+    @RequestMapping( path = "/user/update", method = RequestMethod.PUT )
+    public boolean updateCurrentlyReadingBook( Principal principal, @RequestBody Book book ) {
+        return userReadingListDAO.updateReadingList(
+                userDao.findIdByUsername(principal.getName()), book.getId()
+        );
+    }
+
+
 }

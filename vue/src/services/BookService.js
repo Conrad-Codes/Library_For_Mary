@@ -19,7 +19,20 @@ export default {
     },
 
     createBook(newBook){
-        return http.post('/list', newBook)
+        return http.post('/add-book', newBook)
+    },
+
+    addBookToMyList(bookToMyList){
+        return http.post('/user/add-book', bookToMyList)
+
+    },
+
+    deleteBookFromMyList(removeBook){
+        return http.delete('/user/delete-book', removeBook)
+    },
+
+    viewSavedList(){
+        return http.get('/user/list')
     }
 
 }
