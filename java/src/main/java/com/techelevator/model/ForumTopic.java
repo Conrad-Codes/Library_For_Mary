@@ -1,12 +1,21 @@
 package com.techelevator.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.time.LocalDate;
 
 public class ForumTopic {
+
+    @JsonProperty("topic_id")
     int topicId;
+    @JsonProperty("topic_name")
     String topicName;
+    @JsonProperty("username")
     String CreatedByUsername;
+    @JsonProperty("topic_date")
     LocalDate topicCreatedDate;
+
+    public ForumTopic() {}
 
     public int getTopicId() {
         return topicId;

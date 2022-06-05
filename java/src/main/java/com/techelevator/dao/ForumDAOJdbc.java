@@ -68,6 +68,20 @@ public class ForumDAOJdbc implements ForumDAO{
         return topicPosts;
     }
 
+    @Override
+    public boolean addTopicToForum( int userID, ForumTopic topic ) {
+        for( ForumTopic forumTopic : getAllTopicNames() ) {
+            if( forumTopic.getTopicName().equalsIgnoreCase( topic.getTopicName() ) ) {
+                return false;
+            }
+        }
+
+        String sql = "INSERT INTO forum_topic ( topic_name, user_id )\n" +
+                "VALUES( ?, ? )";
+
+        return jdbcTemplate.update( sql, topic.getTopicName(), userID ) == 1;
+    }
+
     private ForumTopic mapRowToForumTopic(SqlRowSet rowSet ) {
         ForumTopic forumTopic = new ForumTopic();
 

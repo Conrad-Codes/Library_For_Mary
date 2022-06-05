@@ -11,4 +11,6 @@ public interface ForumDAO {
     List<ForumTopic> getAllTopicNames();
     List<TopicPost> getAllPostsByForumTopicId(int topicId);
 
+    boolean addTopicToForum( int userID, ForumTopic topic );
+
 }

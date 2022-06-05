@@ -82,7 +82,7 @@ public class JdbcUserDao implements UserDao {
                 }
                 , keyHolder) == 1;
 
-        // add new user to the user_reading_list, so they have their own reading list
+        // add new user to the user_reading_list, so they have their own reading list on registering
         if( userCreated ) {
             String insertUserIntoUserReadingList = "INSERT INTO user_reading_list ( user_id ) " +
                     "VALUES ( (SELECT user_id FROM users WHERE username = ? ) )";

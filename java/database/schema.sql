@@ -102,7 +102,7 @@ CREATE TABLE forum_topic (
 	topic_id serial,
 	topic_name varchar,
 	user_id int,
-	topic_date date,
+	topic_date date DEFAULT CURRENT_DATE,
 	constraint pk_topic_id primary key (topic_id),
 	constraint fk_users_user_id foreign key (user_id) references users(user_id)	
 );

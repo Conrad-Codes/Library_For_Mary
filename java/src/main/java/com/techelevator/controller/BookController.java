@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin
-//@PreAuthorize( "isAuthenticated()" )
+//@PreAuthorize( "isAuthenticated()" ) //works, uncomment when ready
 public class BookController {
     @Autowired
     UserDao userDao;
@@ -34,7 +34,7 @@ public class BookController {
         return bookDAO.listBooks();
     }
 
-//    @PreAuthorize("hasRole('ADMIN')")
+//    @PreAuthorize("hasRole('ADMIN')") //restricts to admin, remove comment when ready
     @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping( path= "/add-book", method = RequestMethod.POST )
     public void addBook(@RequestBody Book book) {
