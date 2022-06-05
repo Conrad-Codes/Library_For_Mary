@@ -45,7 +45,7 @@ public class UserReadingListDAOJdbc implements UserReadingListDAO {
             }
         }
 
-        String sql = "INSERT INTO reading_list ( list_id, book_id )\n" +
+        String sql = "INSERT INTO reading_list ( list_id, book_id, is_being_read )\n" +
                 "VALUES ( ( SELECT list_id FROM user_reading_list WHERE user_id = ? ), ? );";
 
         return jdbcTemplate.update( sql, userID, bookID ) == 1;
@@ -71,6 +71,44 @@ public class UserReadingListDAOJdbc implements UserReadingListDAO {
                 "\tAND book_id = ?;";
 
         return jdbcTemplate.update( sql, userID, bookID ) == 1;
+    }
+
+    @Override
+    public boolean updateReadingList(int userID, int bookID) {
+        boolean isReading;
+
+        String findRead = "SELECT is_being_read FROM reading_list WHERE book_id = ? " +
+                "AND list_id = ( SELECT list_id FROM user_reading_list WHERE user_id = ?)";
+        SqlRowSet findReadBoolean = jdbcTemplate.queryForRowSet( findRead, bookID, userID );
+        if( findReadBoolean.next() ) {
+            isReading = !findReadBoolean.getBoolean("is_being_read");
+        }
+        else {
+            return false;
+        }
+
+        String sql = "UPDATE reading_list SET is_being_read = ? WHERE book_id = ? " +
+                "AND list_id = ( SELECT list_id FROM user_reading_list WHERE user_id = ?)";
+        return jdbcTemplate.update( sql, isReading, bookID, userID ) == 1;
+    }
+
+    @Override
+    public List<Book> getUserCurrentlyReading(int userID) {
+        List <Book> currentReadingList = new ArrayList<>();
+        String sql = "SELECT book.book_id, book.title, book.description\n" +
+                ", book.published_date, book.cover_art, book.series_id, book.genre_id\n" +
+                "FROM users\n" +
+                "JOIN user_reading_list\n" +
+                "ON users.user_id = user_reading_list.user_id\n" +
+                "JOIN reading_list ON reading_list.list_id = user_reading_list.list_id\n" +
+                "JOIN book ON reading_list.book_id = book.book_id\n" +
+                "WHERE users.user_id = ? AND reading_list.is_being_read = true;";
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, userID);
+        while( results.next() ) {
+            Book book = mapRowToBook(results);
+            currentReadingList.add(book);
+        }
+        return currentReadingList;
     }
 
     private List <String> listOfAuthorsByBookID( int bookID ) {
