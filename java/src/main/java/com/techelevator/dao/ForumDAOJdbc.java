@@ -82,6 +82,30 @@ public class ForumDAOJdbc implements ForumDAO{
         return jdbcTemplate.update( sql, topic.getTopicName(), userID ) == 1;
     }
 
+    @Override
+    public boolean addPostToTopic(int userID, TopicPost post) {
+        String sql = "INSERT INTO forum_post ( topic_id, post, user_id, post_date )\n" +
+                "VALUES ( ?, ?, ?, CURRENT_DATE );";
+
+        return jdbcTemplate.update( sql, post.getTopicId(), post.getPost(), userID ) == 1;
+    }
+
+    @Override
+    public boolean updatePost(int userID, TopicPost post) {
+        int checkUserID;
+        String queryUsername = "SELECT username FROM users WHERE user_id = ?";
+        SqlRowSet queryGetUsername = jdbcTemplate.queryForRowSet( queryUsername, userID );
+        if( queryGetUsername.next() ) {
+            if( !post.getPostCreatedByUsername().equalsIgnoreCase(
+                    queryGetUsername.getString("username"))) {
+                return false;
+            }
+        }
+
+        return false;
+    }
+
+
     private ForumTopic mapRowToForumTopic(SqlRowSet rowSet ) {
         ForumTopic forumTopic = new ForumTopic();
 

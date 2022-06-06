@@ -1,17 +1,13 @@
 import axios from 'axios';
 
-const http = axios.create({
-  baseURL: "http://localhost:8080"
-});
-
 export default {
 
     getBooks(){
-        return http.get('/list');
+        return axios.get('/list');
     },
 
     getBookById(bookID){
-        return http.get(`/books/${bookID}`).then((response) =>{
+        return axios.get(`/books/${bookID}`).then((response) =>{
             const books = response.data.books;
             return books.find(book => book.id == bookID)
         })
@@ -19,25 +15,30 @@ export default {
     },
 
     createBook(newBook){
-        return http.post('/add-book', newBook)
+        return axios.post('/add-book', newBook)
     },
 
     addBookToMyList(bookToMyList){
-        return http.post('/user/add-book', bookToMyList)
+        return axios.post('/user/add-book', bookToMyList)
 
     },
 
     deleteBookFromMyList(removeBook){
-        return http.delete('/user/delete-book', removeBook)
+        return axios.delete('/user/delete-book',{data: removeBook})
     },
 
     viewSavedList(){
-        return http.get('/user/list')
+        return axios.get('/user/list')
+    },
+
+    viewCurrentlyReadingBooks() {
+        return axios.get( '/user/currently-reading' );
     }
+
 
 }
 
-// import list from 'http://localhost:8080/list'
+// import list from 'axios://localhost:8080/list'
 // export default{
     // data(){
 //         return{

@@ -1,13 +1,19 @@
 package com.techelevator.model;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.time.LocalDate;
 
 public class TopicPost {
+    @JsonProperty( "post_id" )
     int postId;
+    @JsonProperty( "topic_id" )
     int topicId;
     String post;
+    @JsonProperty( "username" )
     String postCreatedByUsername;
+    @JsonProperty( "topic_date" )
     LocalDate PostCreatedDate;
 
     public int getPostId() {

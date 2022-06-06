@@ -41,6 +41,7 @@
 
 <script>
 import authService from "../services/AuthService";
+import BookService from '../services/BookService';
 
 export default {
   name: "login",
@@ -62,6 +63,9 @@ export default {
           if (response.status == 200) {
             this.$store.commit("SET_AUTH_TOKEN", response.data.token);
             this.$store.commit("SET_USER", response.data.user);
+            BookService.viewSavedList().then( response => {
+              this.$store.commit("SET_USER_LIST", response.data)
+            });
             this.$router.push("/");
           }
         })
