@@ -21,11 +21,14 @@
     <router-view />
   </div>
 </template>
-<style>                                                   
+<style>      
+
 #app{
   background-color: #93E9BE;
 }
-
+.nav{
+  justify-content: space-evenly;
+}
 .homeButton{
   color: #026670;
   
