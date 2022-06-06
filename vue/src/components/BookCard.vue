@@ -1,5 +1,5 @@
 <template>
-  <div class="card">
+  <div class="card" v-on:click="updateCurrentlyReading(book)">
     <h2 class="book-title">{{ book.title }}</h2>
     <h3 class="series-name">{{ book.series }}</h3>
     <img class="cover-art" v-bind:src="book.cover_art" />
@@ -75,11 +75,6 @@ export default {
             }
           })
       }
-
-
-
-
-
       // if (this.a === true) {
       //   alert("Added to Your Reading List");
       //   BookService.addBookToMyList(this.book)
@@ -108,6 +103,18 @@ export default {
     },
 
     deleteBookFromList() {},
+    
+    updateCurrentlyReading( book ) {
+      BookService.updateCurrentlyReading( book )
+        .then( ( response ) => {
+          if( response.status !== 200 ) {
+            console.log( "Error")
+          }
+          else {
+            alert(`${book.title} added to currently reading`)
+          }
+        } )
+    }
   },
 };
 </script>
