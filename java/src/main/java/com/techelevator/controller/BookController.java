@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin
-@PreAuthorize( "isAuthenticated()" ) //works, uncomment when ready
+//@PreAuthorize( "isAuthenticated()" ) //works, uncomment when ready
 public class BookController {
     @Autowired
     UserDao userDao;
@@ -24,6 +24,7 @@ public class BookController {
         this.bookDAO = bookDAO;
     }
 
+    @PreAuthorize( "isAuthenticated()" )
     @RequestMapping( path = "/books/{id}", method = RequestMethod.GET )
     public Book getBookByID(@PathVariable int id ) {
         return bookDAO.getBook( id );
@@ -41,5 +42,3 @@ public class BookController {
         this.bookDAO.addBook(book);
     }
 }
-
-

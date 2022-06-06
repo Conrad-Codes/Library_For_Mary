@@ -33,12 +33,12 @@ export default {
 .book-container{
   height: auto;
 }
-div.saved-book-container > div.card:hover {
+/* div.saved-book-container > div.card:hover {
   background-color: whitesmoke;
 }
 div.current-book-container > div.card:hover {
   background-color: whitesmoke;
-}
+} */
 div.current-book-container{
   display: flex;
   /* flex-direction: row; */
