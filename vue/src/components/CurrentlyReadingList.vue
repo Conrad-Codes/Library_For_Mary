@@ -30,5 +30,9 @@ export default {
 </script>
 
 <style>
+.book-container{
+  height: auto;
 
+  
+}
 </style>

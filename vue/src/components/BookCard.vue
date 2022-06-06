@@ -5,29 +5,34 @@
     <img class="cover-art" v-bind:src="book.cover_art" />
     <h3 class="book-author">{{ book.author_name.toString() }}</h3>
     <p class="book-description">{{ book.description }}</p>
+    
     <button
       id="addToMyList"
-      @click="toggleReadingList(book)"
+      @click="toggleReadingList(book)" v-if="login"
       >{{bookInList(book.book_id) === false ? "Add To List" : "Remove From List"}}
       <!-- <p class="addingBook" v-show="a">Add To Reading List</p>
       <p class="removingBook" v-show="!a">Remove From Reading List</p> -->
     </button>
+    </div>
     <!-- <button class="btn" v-if@click="saveBookOrRemoveBook">Mark as Read</button> -->
-  </div>
+  
 </template>
 
 <script>
 import BookService from "../services/BookService.js";
 
+
 export default {
   name: "book-card",
   props: {
     book: Object,
+    
   },
   data() {
     return {
       bookFound: false,
-      booksList: []
+      booksList: [],
+      login: false
       // a: true
     };
   },
@@ -37,7 +42,10 @@ export default {
             });
   },
 
+
+
   methods: {
+    
     bookInList(id){
       this.bookFound = false;
       this.booksList.forEach(  entry => {
@@ -146,8 +154,12 @@ p.removingBook {
   border: solid #c8a2c8 2px;
   padding-bottom: 2px;
   background-color: #C8A2C8;
-  
-  
-  
+
+}
+
+button{
+  border-radius: 25px;
+  border: solid #c8a2c8 2px;
+  padding-bottom: 2px;
 }
 </style>
