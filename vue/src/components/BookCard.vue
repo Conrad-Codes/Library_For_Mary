@@ -1,5 +1,5 @@
 <template>
-  <div class="card">
+  <div class="card" v-on:click="updateCurrentlyReading(book)">
     <h2 class="book-title">{{ book.title }}</h2>
     <h3 class="series-name">{{ book.series }}</h3>
     <img class="cover-art" v-bind:src="book.cover_art" />
@@ -8,7 +8,8 @@
     
     <button
       id="addToMyList"
-      @click="toggleReadingList(book)" v-if="login"
+      @click="toggleReadingList(book)"
+      v-show= isLoggedIn
       >{{bookInList(book.book_id) === false ? "Add To List" : "Remove From List"}}
       <!-- <p class="addingBook" v-show="a">Add To Reading List</p>
       <p class="removingBook" v-show="!a">Remove From Reading List</p> -->
@@ -37,9 +38,18 @@ export default {
     };
   },
   created() {
+    if (this.$store.state.token != ""){
     BookService.viewSavedList().then( response => {
               this.booksList = response.data
+              
             });
+    }
+  },
+
+  computed: {
+    isLoggedIn() {
+      return (this.$store.state.token != "")
+    }
   },
 
 
@@ -53,14 +63,15 @@ export default {
           this.bookFound = true;
         }
       });
-      console.log(this.bookFound);
       return this.bookFound;
     },
+
     //check all books ahead of time
     toggleReadingList(book) {
       if(this.bookFound){
         BookService.deleteBookFromMyList(book).then((response) => {
               if (response.status === 200) {
+                alert("Book removed from your reading list")
                 this.$router.go();
               }
             })
@@ -68,15 +79,11 @@ export default {
         BookService.addBookToMyList(book)
           .then((response) => {
             if (response.status === 201) {
+              alert("Book added to your reading list")
               this.$router.go();
             }
           })
       }
-
-
-
-
-
       // if (this.a === true) {
       //   alert("Added to Your Reading List");
       //   BookService.addBookToMyList(this.book)
@@ -105,6 +112,18 @@ export default {
     },
 
     deleteBookFromList() {},
+    
+    updateCurrentlyReading( book ) {
+      BookService.updateCurrentlyReading( book )
+        .then( ( response ) => {
+          if( response.status !== 200 ) {
+            console.log( "Error")
+          }
+          else {
+            alert(`${book.title} added to currently reading`)
+          }
+        } )
+    }
   },
 };
 </script>

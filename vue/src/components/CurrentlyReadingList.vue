@@ -1,5 +1,5 @@
 <template>
-  <div class="book-container">
+  <div class="current-book-container book-container">
     <book-card v-for="book in books" v-bind:book="book" v-bind:key="book.id" />
   </div>
 </template>
@@ -32,7 +32,17 @@ export default {
 <style>
 .book-container{
   height: auto;
-
-  
 }
+div.saved-book-container > div.card:hover {
+  background-color: whitesmoke;
+}
+div.current-book-container > div.card:hover {
+  background-color: whitesmoke;
+}
+div.current-book-container{
+  display: flex;
+  /* flex-direction: row; */
+  justify-content: center;
+}
+
 </style>
