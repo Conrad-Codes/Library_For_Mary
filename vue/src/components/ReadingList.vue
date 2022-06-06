@@ -1,6 +1,8 @@
 <template>
   <div class="book-container">
-      {{this.books}}
+    <!-- {{this.$store.state.token}}
+    {{this.$store.state.user}}
+    {{this.books}} -->
     <book-card v-for="book in books"  v-bind:key="book.id" />
   </div>
 </template>
@@ -16,17 +18,20 @@ export default {
     },
     data(){
         return{
-         books: [],
+         books: []
         }
-       
-        
     },
 
     created(){
-    BookService.viewSavedList().then((response) => {
-      this.books = response.data;
-      
-    });
+    // added user into parameter
+    BookService.viewSavedList()
+      .then( (response) => {
+        if( response.status === 200 ) {
+          console.log( response );
+         this.books = response.data;
+        }
+      })
+      .catch ( error => console.log( error ) );
     }
 }
 </script>
