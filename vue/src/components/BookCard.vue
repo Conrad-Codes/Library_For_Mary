@@ -8,6 +8,7 @@
     <button
       id="addToMyList"
       @click="toggleReadingList(book)"
+      v-show= isLoggedIn
       >{{bookInList(book.book_id) === false ? "Add To List" : "Remove From List"}}
       <!-- <p class="addingBook" v-show="a">Add To Reading List</p>
       <p class="removingBook" v-show="!a">Remove From Reading List</p> -->
@@ -31,9 +32,18 @@ export default {
     };
   },
   created() {
+    if (this.$store.state.token != ""){
     BookService.viewSavedList().then( response => {
               this.booksList = response.data
+              
             });
+    }
+  },
+
+  computed: {
+    isLoggedIn() {
+      return (this.$store.state.token != "")
+    }
   },
 
   methods: {
@@ -44,14 +54,15 @@ export default {
           this.bookFound = true;
         }
       });
-      console.log(this.bookFound);
       return this.bookFound;
     },
+
     //check all books ahead of time
     toggleReadingList(book) {
       if(this.bookFound){
         BookService.deleteBookFromMyList(book).then((response) => {
               if (response.status === 200) {
+                alert("Book removed from your reading list")
                 this.$router.go();
               }
             })
@@ -59,6 +70,7 @@ export default {
         BookService.addBookToMyList(book)
           .then((response) => {
             if (response.status === 201) {
+              alert("Book added to your reading list")
               this.$router.go();
             }
           })
