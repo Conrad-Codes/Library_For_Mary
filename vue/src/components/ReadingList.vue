@@ -1,5 +1,5 @@
 <template>
-  <div class="book-container">
+  <div class="saved-book-container book-container">
     <book-card v-for="book in books" v-bind:book="book" v-bind:key="book.id" />
   </div>
 </template>
