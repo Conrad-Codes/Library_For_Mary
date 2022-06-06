@@ -1,10 +1,5 @@
 import axios from 'axios';
 
-// THIS IS NOT NEEDED ANYMORE!!!!
-// const axios = axios.create({
-//   baseURL: "axios://localhost:8080"
-// });
-
 export default {
 
     getBooks(){
@@ -32,9 +27,12 @@ export default {
         return axios.delete('/user/delete-book', removeBook)
     },
 
-    // added token - please change
     viewSavedList(){
         return axios.get('/user/list')
+    },
+
+    viewCurrentlyReadingBooks() {
+        return axios.get( '/user/currently-reading' );
     }
 
 
