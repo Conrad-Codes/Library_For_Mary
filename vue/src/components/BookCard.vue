@@ -7,13 +7,10 @@
     <p class="book-description">{{ book.description }}</p>
     <button
       id="addToMyList"
-      @click="
-        saveBookOrRemoveBookToMyList();
-        a = !a;
-      "
-    >
-      <p class="addingBook" v-show="a">Add To Reading List</p>
-      <p class="removingBook" v-show="!a">Remove From Reading List</p>
+      @click="toggleReadingList(book)"
+      >{{bookInList(book.book_id) === false ? "Add To List" : "Remove From List"}}
+      <!-- <p class="addingBook" v-show="a">Add To Reading List</p>
+      <p class="removingBook" v-show="!a">Remove From Reading List</p> -->
     </button>
   </div>
 </template>
@@ -28,39 +25,74 @@ export default {
   },
   data() {
     return {
-      a: true,
+      bookFound: false,
+      booksList: []
+      // a: true
     };
   },
-  created() {},
+  created() {
+    BookService.viewSavedList().then( response => {
+              this.booksList = response.data
+            });
+  },
 
   methods: {
+    bookInList(id){
+      this.bookFound = false;
+      this.booksList.forEach(  entry => {
+        if (entry.book_id === id){
+          this.bookFound = true;
+        }
+      });
+      console.log(this.bookFound);
+      return this.bookFound;
+    },
     //check all books ahead of time
-    saveBookOrRemoveBookToMyList() {
-      if (this.a === true) {
-        alert("Added to Your Reading List");
-        BookService.addBookToMyList(this.book)
-          .then((response) => {
-            if (response.status === 201) {
-              this.$router.push("/");
-            }
-          })
-          .catch((error) => {
-            console.error(error);
-          });
-      } else {
-        if (this.a === false) {
-          alert("Removed From List");
-          BookService.deleteBookFromMyList(this.book)
-            .then((response) => {
-              if (response.status === 201) {
-                this.$router.push("/user/list");
+    toggleReadingList(book) {
+      if(this.bookFound){
+        BookService.deleteBookFromMyList(book).then((response) => {
+              if (response.status === 200) {
+                this.$router.go();
               }
             })
-            .catch((error) => {
-              console.error(error);
-            });
-        }
+      } else if (this.bookFound === false){
+        BookService.addBookToMyList(book)
+          .then((response) => {
+            if (response.status === 201) {
+              this.$router.go();
+            }
+          })
       }
+
+
+
+
+
+      // if (this.a === true) {
+      //   alert("Added to Your Reading List");
+      //   BookService.addBookToMyList(this.book)
+      //     .then((response) => {
+      //       if (response.status === 201) {
+      //         this.$router.push("/");
+      //       }
+      //     })
+      //     .catch((error) => {
+      //       console.error(error);
+      //     });
+      // } else {
+      //   if (this.a === false) {
+      //     alert("Removed From List");
+      //     BookService.deleteBookFromMyList(this.book)
+      //       .then((response) => {
+      //         if (response.status === 201) {
+      //           this.$router.push("/user/list");
+      //         }
+      //       })
+      //       .catch((error) => {
+      //         console.error(error);
+      //       });
+      //   }
+      // }
     },
 
     deleteBookFromList() {},

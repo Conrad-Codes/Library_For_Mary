@@ -24,7 +24,7 @@ export default {
     },
 
     deleteBookFromMyList(removeBook){
-        return axios.delete('/user/delete-book', removeBook)
+        return axios.delete('/user/delete-book',{data: removeBook})
     },
 
     viewSavedList(){

@@ -15,6 +15,8 @@ public interface UserReadingListDAO {
     public boolean updateReadingList (int userID, int bookID);
 
     public List <Book> getUserCurrentlyReading (int userID);
+
+    public boolean isBookInList(int bookId);
 }
 
 

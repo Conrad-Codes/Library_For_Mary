@@ -111,6 +111,11 @@ public class UserReadingListDAOJdbc implements UserReadingListDAO {
         return currentReadingList;
     }
 
+    @Override
+    public boolean isBookInList(int bookId) {
+        return false;
+    }
+
     private List <String> listOfAuthorsByBookID( int bookID ) {
         List <String> authors = new ArrayList<>();
         String sql = "SELECT author_name FROM author "

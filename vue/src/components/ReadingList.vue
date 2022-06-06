@@ -1,6 +1,5 @@
 <template>
   <div class="book-container">
-    <!-- {{ this.books }} -->
     <book-card v-for="book in books" v-bind:book="book" v-bind:key="book.id" />
   </div>
 </template>
