@@ -3,6 +3,7 @@ package com.techelevator.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
 
 public class TopicPost {
@@ -10,6 +11,7 @@ public class TopicPost {
     int postId;
     @JsonProperty( "topic_id" )
     int topicId;
+    @NotBlank ( message = "Post cannot be blank" )
     String post;
     @JsonProperty( "username" )
     String postCreatedByUsername;
