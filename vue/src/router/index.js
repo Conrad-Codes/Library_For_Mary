@@ -8,6 +8,7 @@ import store from '../store/index'
 import NewBookForm from '../views/NewBook.vue'
 // import ReadingList from '../components/ReadingList.vue'
 import SavedList from '../views/SavedList.vue'
+import Forum from '../views/Forum.vue'
 
 Vue.use(Router)
 
@@ -70,6 +71,14 @@ const router = new Router({
       component: SavedList,
       meta: {
         requiresAuth: true
+      }
+    },
+    {
+      path: "/forum",
+      name: 'all-forums',
+      component: Forum,
+      meta: {
+        requiresAuth: false
       }
     }
   ]

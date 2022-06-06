@@ -5,10 +5,11 @@
     <img class="cover-art" v-bind:src="book.cover_art" />
     <h3 class="book-author">{{ book.author_name.toString() }}</h3>
     <p class="book-description">{{book.description}}</p>
-    <button id="addToMyList"   @click="saveBookOrRemoveBookToMyList(); a = !a;">
+    <button id="addToMyList"    @click="saveBookToMyList(); a = !a;">
       <p class="addingBook" v-show="a">Add To Reading List </p>
-      <p class="removingBook" v-show="!a">Remove From Reading List </p>
+      <p class="removingBook" @click="deleteBookFromList" v-show="!a">Remove From Reading List </p>
     </button>
+    <!-- <button class="btn" v-if@click="saveBookOrRemoveBook">Mark as Read</button> -->
   </div>
 </template>
 
@@ -28,22 +29,14 @@ export default {
   created(){
     
     },
-    // const btn = document.getElementById('addToMyList');
-    // btn.addEventListener('click', function handleClick() {
-    //   const initialText = 'Add To My Reading List';
-    //   if(btn.textContent.includes(initialText)) {
-    //     btn.textContent = 'Remove From Reading List'
-    //   } else {
-    //     btn.textContent = initialText;
-    //   }
-    // });
+    
   
   
   methods: {
 
     
     //check all books ahead of time
-    saveBookOrRemoveBookToMyList(){
+    saveBookToMyList(){
       if(this.a === true) {
       alert("Added to Your Reading List");
       BookService
@@ -57,8 +50,11 @@ export default {
           console.error(error);
         });
         
-      } else {
-        if(this.a === false){
+      } 
+    },
+
+    deleteBookFromList(){
+      if(this.a === false ){ //and book is in reading list
         alert("Removed From List");
         BookService
       .deleteBookFromMyList(this.book)
@@ -71,11 +67,6 @@ export default {
           console.error(error);
         });
       }
-      }
-    },
-
-    deleteBookFromList(){
-      
       }
       
      },
@@ -111,17 +102,9 @@ export default {
   font-family: 'Playfair Display SC', serif;
 }
 
-p.addingBook{
-  border-radius: 25px;
-  border: solid #C8A2C8 2px;
-  padding-bottom: 2px;
-}
 
-.addToMyList{
-  border-radius: 25px;
-  border: solid #C8A2C8 2px;
-  padding-bottom: 2px;
-}
+
+
 
 p.removingBook{
   border-radius: 25px;
@@ -129,6 +112,15 @@ p.removingBook{
   padding-bottom: 2px;
 }
 
+button{
+   border-radius: 25px;
+  border: solid #C8A2C8 2px;
+  padding-bottom: 2px;
+  background-color: #C8A2C8;
+  
+  
+  
+}
 
 
 </style>

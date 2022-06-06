@@ -16,7 +16,8 @@
       <router-link class="homeButton" v-bind:to="{ name: 'home' }">Home</router-link>&nbsp;|&nbsp;
       <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''">Logout</router-link>&nbsp;|&nbsp;
       <router-link class="addABook" v-bind:to="{name: 'add-book' }">Add a Book</router-link>&nbsp;|&nbsp;
-      <router-link class="myReadingList" v-bind:to="{name: 'my-list'}">My Reading List</router-link>
+      <router-link class="myReadingList" v-bind:to="{name: 'my-list'}">My Reading List</router-link>&nbsp;|&nbsp;
+      <router-link class="ForumPage" v-bind:to="{name: 'all-forums'}">Forum</router-link>
     </div>
     <router-view />
   </div>
@@ -32,4 +33,5 @@
   
   
 }
+
 </style>

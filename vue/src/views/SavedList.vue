@@ -1,7 +1,7 @@
 
 <template>
 <div>
-<h1>TEST</h1>
+<h1>My Reading List</h1>
 <reading-list/>
 
 </div>
