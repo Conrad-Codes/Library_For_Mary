@@ -13,4 +13,8 @@ public interface ForumDAO {
 
     boolean addTopicToForum( int userID, ForumTopic topic );
 
+    boolean addPostToTopic( int userID, TopicPost post );
+
+    boolean updatePost( int userID, TopicPost post );
+
 }
