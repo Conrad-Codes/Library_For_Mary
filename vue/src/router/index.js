@@ -8,7 +8,8 @@ import store from '../store/index'
 import NewBookForm from '../views/NewBook.vue'
 // import ReadingList from '../components/ReadingList.vue'
 import SavedList from '../views/SavedList.vue'
-import Forum from '../views/Forum.vue'
+import ForumTopicsView from '../views/ForumTopicsView.vue'
+import TopicPostsView from "../views/TopicPostsView.vue"
 
 Vue.use(Router)
 
@@ -84,12 +85,20 @@ const router = new Router({
     },
     {
       path: "/forum",
-      name: 'all-forums',
-      component: Forum,
+      name: 'all-topics',
+      component: ForumTopicsView,
       meta: {
-        requiresAuth: false
+        requiresAuth: true
       }
-    }
+    },
+      {
+        path: "/forum/:id",
+        name: 'topic-posts',
+        component: TopicPostsView,
+        meta: {
+          requiresAuth: true
+        }
+      }
   ]
 })
 
