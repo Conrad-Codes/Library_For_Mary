@@ -156,11 +156,11 @@ div.card {
 
 .library{
   background-color: #93E9BE;
+ font-family: 'Comfortaa', cursive;
 }
-
 #filterOptions{
   position: absolute;
-  top: 4.5px;
+  top: 5.5px;
   right: 8px;
 }
 

@@ -14,7 +14,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&display=swap" rel="stylesheet">   
     <div id="nav">
       <router-link class="homeButton" v-bind:to="{ name: 'home' }">Home</router-link>&nbsp;|&nbsp;
-      <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''">Logout</router-link>&nbsp;|&nbsp;
+      <router-link class="logOut" v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''">Logout</router-link>&nbsp;|&nbsp;
       <router-link class="addABook" v-bind:to="{name: 'add-book' }">Add a Book</router-link>&nbsp;|&nbsp;
       <router-link class="myReadingList" v-bind:to="{name: 'my-list'}">My Reading List</router-link>
     </div>
@@ -26,13 +26,25 @@
 #app{
   background-color: #93E9BE;
 }
-.nav{
-  justify-content: space-evenly;
-}
+
 .homeButton{
-  color: #026670;
-  
-  
-  
+  font-size: 22px;
+  color: black;
+  font-family: 'Comfortaa', cursive;
+}
+.logOut{
+  font-size: 22px;
+  color: black;
+  font-family: 'Comfortaa', cursive;
+}
+.addABook{
+  font-size: 22px;
+  color: black;
+  font-family: 'Comfortaa', cursive;
+}
+.myReadingList{
+  font-size: 22px;
+  color: black;
+  font-family: 'Comfortaa', cursive;
 }
 </style>
