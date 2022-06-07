@@ -55,10 +55,10 @@ public class UserReadingListController {
         );
     }
 
-    @RequestMapping( path = "/user/update", method = RequestMethod.PUT )
-    public boolean updateCurrentlyReadingBook( Principal principal, @RequestBody Book book ) {
+    @RequestMapping( path = "/user/{bookID}", method = RequestMethod.PUT )
+    public boolean updateCurrentlyReadingBook( Principal principal, @PathVariable int bookID ) {
         return userReadingListDAO.updateReadingList(
-                userDao.findIdByUsername(principal.getName()), book.getId()
+                userDao.findIdByUsername(principal.getName()), bookID
         );
     }
 

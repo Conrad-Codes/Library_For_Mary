@@ -33,6 +33,10 @@ export default {
 
     viewCurrentlyReadingBooks() {
         return axios.get( '/user/currently-reading' );
+    },
+
+    toggleCurrentlyReading( book ) {
+        return axios.put( `/user/${parseInt(book.book_id)}`, book )
     }
 
 
