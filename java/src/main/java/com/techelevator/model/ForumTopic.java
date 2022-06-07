@@ -2,18 +2,28 @@ package com.techelevator.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
 
 public class ForumTopic {
 
     @JsonProperty("topic_id")
     int topicId;
+
+
+    @NotBlank ( message = "Topic name cannot be blank" )
     @JsonProperty("topic_name")
     String topicName;
+
     @JsonProperty("username")
     String CreatedByUsername;
+
     @JsonProperty("topic_date")
     LocalDate topicCreatedDate;
+
+    @NotBlank( message = "Post cannot be blank" )
+    @JsonProperty("initial_post")
+    String initialPost;
 
     public ForumTopic() {}
 
@@ -47,5 +57,13 @@ public class ForumTopic {
 
     public void setTopicCreatedDate(LocalDate topicCreatedDate) {
         this.topicCreatedDate = topicCreatedDate;
+    }
+
+    public String getInitialPost() {
+        return initialPost;
+    }
+
+    public void setInitialPost(String initialPost) {
+        this.initialPost = initialPost;
     }
 }

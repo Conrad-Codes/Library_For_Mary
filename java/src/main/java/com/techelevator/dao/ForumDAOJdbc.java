@@ -76,10 +76,25 @@ public class ForumDAOJdbc implements ForumDAO{
             }
         }
 
-        String sql = "INSERT INTO forum_topic ( topic_name, user_id )\n" +
-                "VALUES( ?, ? )";
+        String sql = "INSERT INTO forum_topic ( topic_name, user_id, topic_date )\n" +
+                "VALUES( ?, ?, CURRENT_DATE )";
 
-        return jdbcTemplate.update( sql, topic.getTopicName(), userID ) == 1;
+       jdbcTemplate.update( sql, topic.getTopicName(), userID );
+
+        TopicPost initPost = new TopicPost();
+        initPost.setPost(topic.getInitialPost());
+
+        sql = "SELECT topic_id FROM forum_topic WHERE topic_name like ? AND user_id = ?;";
+
+        SqlRowSet result = jdbcTemplate.queryForRowSet(sql, topic.getTopicName(), userID);
+
+        if (result.next()) {
+            initPost.setTopicId(result.getInt("topic_id"));
+        }else {
+            return false;
+        }
+        System.out.println(initPost.getTopicId());
+        return addPostToTopic(userID, initPost);
     }
 
     @Override
@@ -89,7 +104,7 @@ public class ForumDAOJdbc implements ForumDAO{
 //        }
 
         String sql = "INSERT INTO forum_post ( topic_id, post, user_id, post_date )\n" +
-                "VALUES ( ?, ?, ?, CURRENT_TIME );";
+                "VALUES ( ?, ?, ?, CURRENT_DATE );";
 
         return jdbcTemplate.update( sql, post.getTopicId(), post.getPost(), userID ) == 1;
     }
