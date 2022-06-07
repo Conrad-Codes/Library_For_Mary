@@ -23,6 +23,8 @@ public class Book {
     private String imgUrl;
     @JsonProperty("series")
     private String series;
+    @JsonProperty("date_created")
+    LocalDate dateCreated;
 
 
     public Book() {};
@@ -99,7 +101,13 @@ public class Book {
         this.series = series;
     }
 
+    public LocalDate getDateCreated() {
+        return dateCreated;
+    }
 
+    public void setDateCreated(LocalDate dateCreated) {
+        this.dateCreated = dateCreated;
+    }
 
     @Override
     public String toString() {

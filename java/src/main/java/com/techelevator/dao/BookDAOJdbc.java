@@ -5,6 +5,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -215,6 +216,20 @@ public class BookDAOJdbc implements BookDAO {
         return bookId;
     }
 
+    private List<Book> getBooksByDate(LocalDate date){
+        List<Book> newBooks = new ArrayList<>();
+
+        String sql = "SELECT * FROM book WHERE date_created > ? ORDER BY date_created;";
+
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, date );
+
+        while (results.next()){
+            Book book = mapRowToBook(results);
+            newBooks.add(book);
+        }
+        return newBooks;
+    }
+
     private Book mapRowToBook(SqlRowSet rowSet) {
         Book book = new Book();
 
@@ -226,6 +241,8 @@ public class BookDAOJdbc implements BookDAO {
         book.setAuthors( listOfAuthorsByBookID( rowSet.getInt("book_id") ) );
         book.setGenre( getGenreByBookID( rowSet.getInt("book_id") ) );
         book.setSeries(getBookSeriesBySeriesId(rowSet.getInt("series_id")));
+//        book.setDateCreated(rowSet.getDate("date_created").toLocalDate());
+
         return book;
     }
 }

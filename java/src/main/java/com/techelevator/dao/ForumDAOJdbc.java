@@ -59,7 +59,8 @@ public class ForumDAOJdbc implements ForumDAO{
                 "ON forum_post.topic_id = forum_topic.topic_id\n" +
                 "JOIN users\n" +
                 "ON forum_post.user_id = users.user_id\n" +
-                "WHERE forum_post.topic_id = ?;";
+                "WHERE forum_post.topic_id = ? " +
+                "ORDER BY forum_post.post_date;";
         SqlRowSet results = jdbcTemplate.queryForRowSet( sql, topicId );
         while( results.next() ) {
             TopicPost topicPost = mapRowToTopicPost( results );
