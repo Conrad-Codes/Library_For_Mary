@@ -114,6 +114,11 @@ export default {
         this.book.author_name.push("");
     },
     saveBook() {
+      const input = document.querySelector(".description-input");
+      if (input.value.length > 500){
+        window.alert("Please limit description to 500 characters")
+        return
+      }
       BookService.createBook(this.book)
         .then((response) => {
           if (response.status === 201) {
