@@ -5,13 +5,33 @@
     <img class="cover-art" v-bind:src="book.cover_art" />
     <h3 class="book-author">{{ book.author_name.toString() }}</h3>
     <p class="book-description">{{ book.description }}</p>
-    <button
-      id="addToMyList"
-      @click="toggleReadingList(book)"
-      >{{bookInList(book.book_id) === false ? "Add To List" : "Remove From List"}}
-      <!-- <p class="addingBook" v-show="a">Add To Reading List</p>
+    <div>
+      <button
+        class="toggleButton"
+        @click="toggleReadingList(book)"
+        v-show="isLoggedIn"
+      >
+        {{
+          bookInReadingList(book.book_id) === false
+            ? "Add To List"
+            : "Remove From List"
+        }}
+        <!-- <p class="addingBook" v-show="a">Add To Reading List</p>
       <p class="removingBook" v-show="!a">Remove From Reading List</p> -->
-    </button>
+      </button>
+
+      <button
+        class="toggleButton"
+        @click="toggleCurrentlyReading(book)"
+        v-show="isLoggedIn && bookInReadingList(book.book_id)"
+      >
+        {{
+          bookInCurrentReadingList(book.book_id) === false
+            ? "Add to Currently Reading"
+            : "Remove From Currently Reading"
+        }}
+      </button>
+    </div>
   </div>
 </template>
 
@@ -26,76 +46,86 @@ export default {
   data() {
     return {
       bookFound: false,
-      booksList: []
+      booksList: [],
+      currentReadingList: [],
+      isReadingBook: false
       // a: true
     };
   },
   created() {
-    BookService.viewSavedList().then( response => {
-              this.booksList = response.data
-            });
+    if (this.$store.state.token != "") {
+      BookService.viewSavedList().then((response) => {
+        this.booksList = response.data;
+      });
+
+      BookService.viewCurrentlyReadingBooks().then((response) => {
+          this.currentReadingList = response.data;
+      });
+    }
+  },
+
+  computed: {
+    isLoggedIn() {
+      return this.$store.state.token != "";
+    },
   },
 
   methods: {
-    bookInList(id){
+    bookInReadingList(id) {
       this.bookFound = false;
-      this.booksList.forEach(  entry => {
-        if (entry.book_id === id){
+      this.booksList.forEach((entry) => {
+        if (entry.book_id === id) {
           this.bookFound = true;
         }
       });
-      console.log(this.bookFound);
       return this.bookFound;
     },
-    //check all books ahead of time
-    toggleReadingList(book) {
-      if(this.bookFound){
-        BookService.deleteBookFromMyList(book).then((response) => {
-              if (response.status === 200) {
-                this.$router.go();
-              }
-            })
-      } else if (this.bookFound === false){
-        BookService.addBookToMyList(book)
-          .then((response) => {
-            if (response.status === 201) {
-              this.$router.go();
-            }
-          })
-      }
 
-
-
-
-
-      // if (this.a === true) {
-      //   alert("Added to Your Reading List");
-      //   BookService.addBookToMyList(this.book)
-      //     .then((response) => {
-      //       if (response.status === 201) {
-      //         this.$router.push("/");
-      //       }
-      //     })
-      //     .catch((error) => {
-      //       console.error(error);
-      //     });
-      // } else {
-      //   if (this.a === false) {
-      //     alert("Removed From List");
-      //     BookService.deleteBookFromMyList(this.book)
-      //       .then((response) => {
-      //         if (response.status === 201) {
-      //           this.$router.push("/user/list");
-      //         }
-      //       })
-      //       .catch((error) => {
-      //         console.error(error);
-      //       });
-      //   }
-      // }
+    bookInCurrentReadingList(id) {
+      this.isReadingBook = false;
+      this.currentReadingList.forEach((entry) => {
+        if (entry.book_id === id) {
+          this.isReadingBook = true;
+        }
+      });
+      return this.isReadingBook;
     },
 
-    deleteBookFromList() {},
+    //check all books ahead of time
+    toggleReadingList(book) {
+      if (this.bookFound) {
+        BookService.deleteBookFromMyList(book).then((response) => {
+          if (response.status === 200) {
+            alert(`${book.title} removed from your reading list`);
+            this.$router.go();
+          }
+        });
+      } else if (this.bookFound === false) {
+        BookService.addBookToMyList(book).then((response) => {
+          if (response.status === 201) {
+            alert(`${book.title} added to your reading list`);
+            this.$router.go();
+          }
+        });
+      }
+    },
+
+    toggleCurrentlyReading(book) {
+      BookService.toggleCurrentlyReading(book).then((response) => {
+        if (response.status !== 200) {
+          console.log("Error");
+        } else {
+          this.isReadingBook = !this.isReadingBook;
+          if (this.isReadingBook){
+            alert(`${book.title} added to currently reading list`);
+          this.$router.go();
+          }else {
+          alert(`${book.title} removed from currently reading list`);
+          this.$router.go();
+        }
+        }
+      });
+    },
   },
 };
 </script>
@@ -141,6 +171,16 @@ p.addingBook {
 }
 
 p.removingBook {
+  border-radius: 25px;
+  border: solid #c8a2c8 2px;
+  padding-bottom: 2px;
+}
+
+.toggleButton {
+  margin: 3px;
+}
+
+button{
   border-radius: 25px;
   border: solid #c8a2c8 2px;
   padding-bottom: 2px;

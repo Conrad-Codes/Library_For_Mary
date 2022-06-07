@@ -9,13 +9,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin
-//@PreAuthorize("isAuthenticated()")
+@PreAuthorize("isAuthenticated()")
 public class ForumController {
     @Autowired
     ForumDAO forumDAO;
@@ -48,14 +49,26 @@ public class ForumController {
 
     @ResponseStatus( HttpStatus.CREATED )
     @RequestMapping( path = "/forum/topic/add-post", method = RequestMethod.POST )
-    public boolean addTopicPost( Principal principal, @RequestBody TopicPost post ) {
+    public boolean addTopicPost( Principal principal, @Valid @RequestBody TopicPost post ) {
         return forumDAO.addPostToTopic(
                 userDao.findIdByUsername( principal.getName() )
                 , post
         );
     }
 
+    @RequestMapping( path = "/forum/topic/update-post", method = RequestMethod.PUT )
+    public boolean updateTopicPostByTopicID( Principal principal, @RequestBody TopicPost topicPost ) {
+        return forumDAO.updatePost( userDao.findIdByUsername(principal.getName()), topicPost );
+    }
 
+    @RequestMapping( path = "/forum/topic/{postID}", method = RequestMethod.GET )
+    public TopicPost getTopicPost( Principal principal, @PathVariable int postID ) {
+        return forumDAO.getTopicPostByPostID( userDao.findIdByUsername(principal.getName()), postID );
+    }
 
+    @RequestMapping( path = "/forum/topic/{postID}", method = RequestMethod.DELETE )
+    public boolean deleteTopicPost( Principal principal, int postID ) {
+        return forumDAO.deletePostByPostID( userDao.findIdByUsername(principal.getName()), postID );
+    }
 
 }

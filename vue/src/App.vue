@@ -14,15 +14,21 @@
 <link href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&display=swap" rel="stylesheet">   
     <div id="nav">
       <router-link class="homeButton" v-bind:to="{ name: 'home' }">Home</router-link>&nbsp;|&nbsp;
-      <router-link class="logOut" v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''">Logout</router-link>&nbsp;|&nbsp;
+      <router-link v-bind:to="{ name: 'login' }" v-if="$store.state.token == ''">Login</router-link>
+      <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''">Logout</router-link>&nbsp;|&nbsp;
       <router-link class="addABook" v-bind:to="{name: 'add-book' }">Add a Book</router-link>&nbsp;|&nbsp;
-      <router-link class="myReadingList" v-bind:to="{name: 'my-list'}">My Reading List</router-link>
+      <router-link class="myReadingList" v-bind:to="{name: 'my-list'}">My Reading List</router-link>&nbsp;|&nbsp;
+      <router-link class="ForumPage" v-bind:to="{name: 'all-topics'}">Forum</router-link>
     </div>
     <router-view />
   </div>
 </template>
-<style>      
 
+<script>
+
+</script>
+
+<style>                                                   
 #app{
   background-color: #93E9BE;
 }
@@ -47,4 +53,6 @@
   color: black;
   font-family: 'Comfortaa', cursive;
 }
+
+
 </style>

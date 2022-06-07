@@ -24,6 +24,7 @@ public class BookController {
         this.bookDAO = bookDAO;
     }
 
+    @PreAuthorize( "isAuthenticated()" )
     @RequestMapping( path = "/books/{id}", method = RequestMethod.GET )
     public Book getBookByID(@PathVariable int id ) {
         return bookDAO.getBook( id );
@@ -34,12 +35,10 @@ public class BookController {
         return bookDAO.listBooks();
     }
 
-//    @PreAuthorize("hasRole('ADMIN')") //restricts to admin, remove comment when ready
+   @PreAuthorize("hasRole('ADMIN')") //restricts to admin, remove comment when ready
     @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping( path= "/add-book", method = RequestMethod.POST )
     public void addBook(@RequestBody Book book) {
         this.bookDAO.addBook(book);
     }
 }
-
-

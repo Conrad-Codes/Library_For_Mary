@@ -8,6 +8,8 @@ import store from '../store/index'
 import NewBookForm from '../views/NewBook.vue'
 // import ReadingList from '../components/ReadingList.vue'
 import SavedList from '../views/SavedList.vue'
+import ForumTopicsView from '../views/ForumTopicsView.vue'
+import TopicPostsView from "../views/TopicPostsView.vue"
 
 Vue.use(Router)
 
@@ -29,8 +31,8 @@ const router = new Router({
       name: 'home',
       component: Home,
       meta: {
-        // requiresAuth: false
-        requiresAuth: true // original
+         requiresAuth: false
+        // requiresAuth: true // original
 
       }
     },
@@ -69,7 +71,7 @@ const router = new Router({
       name: 'add-book',
       component: NewBookForm,
       meta: {
-        requiresAuth: true
+        requiresAuth: true,
       }
     },
     {
@@ -80,7 +82,23 @@ const router = new Router({
         // requiresAuth: false
         requiresAuth: true // original
       }
-    }
+    },
+    {
+      path: "/forum",
+      name: 'all-topics',
+      component: ForumTopicsView,
+      meta: {
+        requiresAuth: true
+      }
+    },
+      {
+        path: "/forum/:id",
+        name: 'topic-posts',
+        component: TopicPostsView,
+        meta: {
+          requiresAuth: true
+        }
+      }
   ]
 })
 
