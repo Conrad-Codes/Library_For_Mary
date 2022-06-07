@@ -1,6 +1,7 @@
 <template>
   <div class="topics-list">
-
+    <button> <router-link class="AddATopicButton" v-bind:to="{name: 'add-a-topic' }">Share Your Thoughts!</router-link>
+    </button>
     <table id="topic-table">
       <thead>
         <tr>
@@ -33,7 +34,7 @@ export default {
     return {
       topics: [],
       fields: ["Topic", "Created By", "Date Created"],
-    };
+    }
   },
 
   created() {

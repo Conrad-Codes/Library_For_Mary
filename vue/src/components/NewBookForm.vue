@@ -68,12 +68,13 @@
 
       <label class="description">Description:</label>
       <div class="input">
-        <input
+        <textarea
           class="description-input"
           type="text"
           placeholder="Description"
           v-model="book.description"
-        /><br />
+        >
+        </textarea>
       </div>
       <label class="cover_art">Cover Art:</label><br />
       <div class="input">
@@ -149,7 +150,7 @@ label {
  
 }
 
-input {
+input, textarea{
   font-size: 25px;
    border-radius: 25px;
   border: solid #c8a2c8 2px

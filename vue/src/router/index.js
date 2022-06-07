@@ -10,7 +10,7 @@ import NewBookForm from '../views/NewBook.vue'
 import SavedList from '../views/SavedList.vue'
 import ForumTopicsView from '../views/ForumTopicsView.vue'
 import TopicPostsView from "../views/TopicPostsView.vue"
-import PostANewTopic from "../components/PostANewTopic.vue"
+import NewTopicView from "../views/NewTopicView"
 
 Vue.use(Router)
 
@@ -104,7 +104,7 @@ const router = new Router({
       {
         path: "/forum/add-forum-topic",
         name: 'add-a-topic',
-        component: PostANewTopic
+        component: NewTopicView
       }
   ]
 })

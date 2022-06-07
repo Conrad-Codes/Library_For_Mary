@@ -1,8 +1,7 @@
 <template>
   <div>
     <h1>Welcome to the Forum!</h1>
-    <router-link class="AddATopicButton" v-bind:to="{name: 'add-a-topic' }">Share Your Thoughts!</router-link>
-    <ForumTopics/>
+    <ForumTopics />
   </div>
 </template>
 
@@ -14,9 +13,6 @@ export default {
   components: {
     ForumTopics,
    
-  },
-  data(){
-    
   },
 
   methods:{
