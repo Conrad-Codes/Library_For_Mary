@@ -141,10 +141,13 @@ export default {
 <style>
 label {
   font-size: 25px;
+ 
 }
 
 input {
   font-size: 25px;
+   border-radius: 25px;
+  border: solid #c8a2c8 2px
 }
 
 legend {
@@ -153,5 +156,11 @@ legend {
 
 form {
   text-align: center;
+  
 }
+
+/* .add-book-form{
+  border-radius: 25px;
+  border: solid #c8a2c8 2px
+} */
 </style>
