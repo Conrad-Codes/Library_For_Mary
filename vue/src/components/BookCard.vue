@@ -179,4 +179,10 @@ p.removingBook {
 .toggleButton {
   margin: 3px;
 }
+
+button{
+  border-radius: 25px;
+  border: solid #c8a2c8 2px;
+  padding-bottom: 2px;
+}
 </style>
