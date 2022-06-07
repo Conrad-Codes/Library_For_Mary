@@ -84,15 +84,18 @@ public class ForumDAOJdbc implements ForumDAO{
 
     @Override
     public boolean addPostToTopic(int userID, TopicPost post) {
+//        if( post.getPost() == null || post.getPost().length() < 1 ) {
+//            return false;
+//        }
+
         String sql = "INSERT INTO forum_post ( topic_id, post, user_id, post_date )\n" +
-                "VALUES ( ?, ?, ?, CURRENT_DATE );";
+                "VALUES ( ?, ?, ?, CURRENT_TIME );";
 
         return jdbcTemplate.update( sql, post.getTopicId(), post.getPost(), userID ) == 1;
     }
 
     @Override
     public boolean updatePost(int userID, TopicPost post) {
-        int checkUserID;
         String queryUsername = "SELECT username FROM users WHERE user_id = ?";
         SqlRowSet queryGetUsername = jdbcTemplate.queryForRowSet( queryUsername, userID );
         if( queryGetUsername.next() ) {
@@ -102,9 +105,28 @@ public class ForumDAOJdbc implements ForumDAO{
             }
         }
 
-        return false;
+        String sql = "UPDATE forum_post SET post = ? WHERE user_id = ? AND post_id = ?";
+        return jdbcTemplate.update( sql, post.getPost(), userID, post.getPostId() ) == 1;
     }
 
+    @Override
+    public TopicPost getTopicPostByPostID(int userID, int postID) {
+        TopicPost post = null;
+        String sql = "SELECT post_id, topic_id, post, user_id, post_date " +
+                "FROM forum_post WHERE user_id = ? AND post_id = ?";
+        SqlRowSet result = jdbcTemplate.queryForRowSet( sql, userID, postID );
+        if( result.next() ) {
+            post = mapRowToTopicPost( result );
+        }
+        return post;
+    }
+
+    @Override
+    public boolean deletePostByPostID(int userID, int postID) {
+        String sql = "DELETE FROM forum_post WHERE user_id = ? AND postID = ?";
+
+        return jdbcTemplate.update( sql, userID, postID ) == 1 ;
+    }
 
     private ForumTopic mapRowToForumTopic(SqlRowSet rowSet ) {
         ForumTopic forumTopic = new ForumTopic();

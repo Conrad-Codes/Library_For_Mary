@@ -34,10 +34,24 @@
 }
 
 .homeButton{
-  color: #026670;
-  
-  
-  
+  font-size: 22px;
+  color: black;
+  font-family: 'Comfortaa', cursive;
+}
+.logOut{
+  font-size: 22px;
+  color: black;
+  font-family: 'Comfortaa', cursive;
+}
+.addABook{
+  font-size: 22px;
+  color: black;
+  font-family: 'Comfortaa', cursive;
+}
+.myReadingList{
+  font-size: 22px;
+  color: black;
+  font-family: 'Comfortaa', cursive;
 }
 
 

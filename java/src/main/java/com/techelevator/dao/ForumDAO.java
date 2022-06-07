@@ -17,4 +17,8 @@ public interface ForumDAO {
 
     boolean updatePost( int userID, TopicPost post );
 
+    TopicPost getTopicPostByPostID( int userID, int postID );
+
+    boolean deletePostByPostID( int userID, int postID );
+
 }

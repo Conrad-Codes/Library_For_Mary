@@ -142,8 +142,8 @@ export default {
 }
 
 .cover-art {
-  width: 250px;
-  height: 350px;
+  width: 225px;
+  height: 325px;
 }
 
 .book-description {

@@ -110,7 +110,7 @@ CREATE TABLE forum_topic (
 CREATE TABLE forum_post (
 	post_id serial,
 	topic_id int,
-	post varchar, 
+	post varchar NOT NULL,
 	user_id int,
 	post_date date,
 	constraint pk_post_id primary key (post_id),

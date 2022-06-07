@@ -2,7 +2,7 @@
   <div class="entireHome">
     <div class="home">
       <h1 class="Mary">Welcome to Mary's Magnificent Library</h1>
-      <p>Use our search bar to see all the wonderful books Mary offers!</p>
+      <p>Home of your next favorite book!</p>
     </div>
     
     <div>
@@ -48,12 +48,14 @@ export default {
 
 h1{
   text-align: center;
-  font-family:cursive
+  font-family:cursive;
+  font-size: 50px;
 }
 
 p{
   text-align: center;
   font-family: 'Comfortaa', cursive;
+  font-size: 25px;
 }
 
 .home{
