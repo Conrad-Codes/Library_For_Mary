@@ -10,6 +10,7 @@ import NewBookForm from '../views/NewBook.vue'
 import SavedList from '../views/SavedList.vue'
 import ForumTopicsView from '../views/ForumTopicsView.vue'
 import TopicPostsView from "../views/TopicPostsView.vue"
+import PostANewTopic from "../components/PostANewTopic.vue"
 
 Vue.use(Router)
 
@@ -98,6 +99,12 @@ const router = new Router({
         meta: {
           requiresAuth: true
         }
+      },
+
+      {
+        path: "/forum/add-forum-topic",
+        name: 'add-a-topic',
+        component: PostANewTopic
       }
   ]
 })

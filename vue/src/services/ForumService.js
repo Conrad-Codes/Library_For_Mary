@@ -8,6 +8,10 @@ export default {
 
     getPostsByTopicId(topicId){
         return axios.get(`/forum/${topicId}`)
-    }
+    },
+
+    createTopic(topic){
+        return axios.post('/forum/add-forum-topic', topic)
+    },
 
 }
