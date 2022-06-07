@@ -1,5 +1,6 @@
 <template>
   <div>
+    {{this.$route.params.id}}
     <table id="post-table">
       <thead>
         <tr>
@@ -18,6 +19,7 @@
         </tr>
       </tbody>
     </table>
+    
   </div>
 </template>
 

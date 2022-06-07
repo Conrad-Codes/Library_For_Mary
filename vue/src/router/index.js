@@ -11,6 +11,7 @@ import SavedList from '../views/SavedList.vue'
 import ForumTopicsView from '../views/ForumTopicsView.vue'
 import TopicPostsView from "../views/TopicPostsView.vue"
 import NewTopicView from "../views/NewTopicView"
+import ReplyForm from "../components/ReplyForm.vue"
 
 Vue.use(Router)
 
@@ -105,7 +106,15 @@ const router = new Router({
         path: "/forum/add-forum-topic",
         name: 'add-a-topic',
         component: NewTopicView
+      },
+      
+      {
+        path: "/forum/topic/add-post",
+        name: 'reply-to-post',
+        component: ReplyForm
+
       }
+
   ]
 })
 
