@@ -21,8 +21,8 @@
           v-model="topic.initial_post"
         >
         </textarea>
-         <button>Submit</button>
       </div>
+      <button>Submit</button>
       <br />
     </div>
   </form>
