@@ -46,6 +46,15 @@
       />
       <label for="publishDate">Date Published</label>
 
+      <input
+        type="radio"
+        id="dateAdded"
+        name="category_search"
+        value="dateAdded"
+        v-model="radioVal"
+      />
+      <label for="dateAdded">Date Added</label>
+
     </form>
 
     <div id="searchOptions">
@@ -130,6 +139,12 @@ export default {
           books.series.toLowerCase().includes(this.searchTerm.toLowerCase())
         );
       }
+
+      if (this.radioVal === "dateAdded") {
+        bookList = bookList.filter((books) =>
+          books.date_created > this.searchTerm);
+      }
+
       return bookList;
     },
   },
