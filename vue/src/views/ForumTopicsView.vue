@@ -1,11 +1,8 @@
 <template>
-  <div class="forumTopicsView">
-    <div class="header">
-      <h1>Welcome to the Forum!</h1>
-    </div>
-    <div class="main">
-      <ForumTopics />
-    </div>
+  <!-- THIS IS THE FORUM PAGE TAB -->
+  <div>
+    <h1>Welcome to the Forum!</h1>
+    <ForumTopics />
   </div>
 </template>
 
