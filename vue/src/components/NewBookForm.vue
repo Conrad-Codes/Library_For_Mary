@@ -4,13 +4,25 @@
       <legend>Add a Book:</legend>
 
       <label id="titleLabel" for="title">Title:</label>
-      <div class="input">
+      <div class="input autocomplete">
         <input
-          class="title-input"
+          class="title-input "
           type="text"
           placeholder="Title"
           v-model="book.title"
+          @input="onChange"
         />
+        <ul
+          v-show= "isTitleOpen"
+          class="autocomplete-results title-results">
+          <li 
+            v-for="(result, i) in titleResults"
+            :key=i
+            class="autocomplete-result title-result"
+            >
+            {{result}}
+          </li>
+        </ul>
       </div>
 
       <label for="author_name">Author:</label>
@@ -99,6 +111,10 @@ export default {
 
   data() {
     return {
+      titleResults: [],
+      titleItems: [],
+      isTitleOpen: false,
+      books: [],
       book: {
         title: "",
         author_name: [""],
@@ -111,6 +127,14 @@ export default {
     };
   },
   methods: {
+    filterTitleResults() {
+      this.titleResults = this.titleItems.filter(item => item.toLowerCase().indexOf(this.book.title.toLowerCase()) > -1);
+    },
+    onTitleChange() {
+      this.filterTitleResults();
+      this.isTitleOpen = true;
+    },
+
     addAuthor() {
         this.book.author_name.push("");
     },
@@ -129,22 +153,47 @@ export default {
         .catch((error) => {
           console.error(error);
         });
-      //    const bookID = this.$route.params.id;
-      //    this.book.bookID = bookID
-      //    this.book = {
-      //         title: '',
-      //         author: '',
-      //         series:  '',
-      //         genre_name: '',
-      //         datePublished: ''
-      //    };
-      //    this.$router.push('/add-book');
     },
   },
+
+  created() {
+    BookService.getBooks().then((response) => {
+      this.books = response.data;
+    });
+
+    this.books.forEach(item => this.titleItems.push(item.title));
+  },
+  
 };
 </script>
 
 <style>
+.autocomplete {
+    position: relative;
+  }
+
+  .autocomplete-results {
+    padding: 0;
+    margin: 0;
+    border: 1px solid #eeeeee;
+    height: 120px;
+    min-height: 1em;
+    max-height: 6em;    
+    overflow: auto;
+  }
+
+  .autocomplete-result {
+    list-style: none;
+    text-align: left;
+    padding: 4px 2px;
+    cursor: pointer;
+  }
+
+  .autocomplete-result:hover {
+    background-color: #4AAE9B;
+    color: white;
+  }
+
 label {
   font-size: 25px;
  

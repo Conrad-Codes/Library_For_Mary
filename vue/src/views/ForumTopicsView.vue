@@ -1,30 +1,33 @@
 <template>
-  <div>
-    <h1>Welcome to the Forum!</h1>
-    <ForumTopics />
+  <div class="forumTopicsView">
+    <div class="header">
+      <h1>Welcome to the Forum!</h1>
+    </div>
+    <div class="main">
+      <ForumTopics />
+    </div>
   </div>
 </template>
 
 <script>
 import ForumTopics from "../components/ForumTopics.vue";
 
-
 export default {
   components: {
     ForumTopics,
-   
   },
 
-  methods:{
-    
-  },
+  methods: {},
 
-  created(){
-
-  }
+  created() {},
 };
 </script>
 
 <style>
-
+div.header {
+  grid-area: header;
+}
+div.main {
+  grid-area: main;
+}
 </style>

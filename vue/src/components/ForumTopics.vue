@@ -1,6 +1,6 @@
 <template>
   <div class="topics-list">
-    <button> <router-link class="AddATopicButton" v-bind:to="{name: 'add-a-topic' }">Share Your Thoughts!</router-link>
+    <button class="addTopicBtn"> <router-link class="AddATopicButton" v-bind:to="{name: 'add-a-topic' }">Share Your Thoughts!</router-link>
     </button>
     <table id="topic-table">
       <thead>
@@ -46,4 +46,8 @@ export default {
 </script>
 
 <style>
+#topics-list {
+  justify-content: center;
+  justify-items: center;
+}
 </style>
