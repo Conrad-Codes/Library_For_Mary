@@ -30,7 +30,7 @@
 
 <style>                                                   
 #app{
-  background-color: #93E9BE;
+  background-color: #86ffc3;
 }
 
 .homeButton{

@@ -33,7 +33,7 @@ public class BookDAOJdbc implements BookDAO {
     @Override
     public List<Book> listBooks() {
         List <Book> books = new ArrayList<>();
-        String sql = "SELECT book_id, title, description, published_date, cover_art, series_id, genre_id FROM book;";
+        String sql = "SELECT book_id, title, description, published_date, cover_art, series_id, genre_id, date_created FROM book;";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
         while(results.next()) {
             Book book = mapRowToBook(results);
@@ -241,7 +241,7 @@ public class BookDAOJdbc implements BookDAO {
         book.setAuthors( listOfAuthorsByBookID( rowSet.getInt("book_id") ) );
         book.setGenre( getGenreByBookID( rowSet.getInt("book_id") ) );
         book.setSeries(getBookSeriesBySeriesId(rowSet.getInt("series_id")));
-//        book.setDateCreated(rowSet.getDate("date_created").toLocalDate());
+        book.setDateCreated(rowSet.getDate("date_created").toLocalDate());
 
         return book;
     }
