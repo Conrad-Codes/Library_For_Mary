@@ -1,6 +1,6 @@
 
 <template>
- <div >
+ <div class="main">
     <h1> Want To Expand The Library? </h1>
     <new-book-form/>
 </div>
@@ -21,5 +21,8 @@ export default {
 </script>
 
 <style>
+.main{
+    grid-area: main;;
+}
 
 </style>
