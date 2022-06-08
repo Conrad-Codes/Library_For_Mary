@@ -1,21 +1,22 @@
 <template>
+<!--THIS PORTION IS FOR WHEN YOU CLICK ON THE LINKS ON THE FORUM TOPIC  -->
   <div>
     {{this.$route.params.id}}
     <table id="post-table">
       <thead>
         <tr>
-          <th v-for="field in fields" :key="field.id">
+          <th class="fieldId" v-for="field in fields" :key="field.id">
             {{ field }}
           </th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="post in topicPosts" :key="post.post_id">
-          <td>
+        <tr class="forumPost" v-for="post in topicPosts" :key="post.post_id">
+          <td class="postUserName">
             {{ post.username }}
           </td>
-          <td>{{ post.post }}</td>
-          <td>{{ post.postCreatedDate }}</td>
+          <td class="postPost">{{ post.post }}</td>
+          <td class="postDateCreated">{{ post.postCreatedDate }}</td>
         </tr>
       </tbody>
     </table>
@@ -45,4 +46,8 @@ export default {
 </script>
 
 <style>
+ 
+.postUserName{
+  font-family: "Playfair Display SC", serif ;
+}
 </style>

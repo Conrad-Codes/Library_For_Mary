@@ -1,4 +1,5 @@
 <template>
+  <!-- THIS IS THE FORUM PAGE TAB -->
   <div>
     <h1>Welcome to the Forum!</h1>
     <ForumTopics />
