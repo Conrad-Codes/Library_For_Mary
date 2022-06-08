@@ -15,11 +15,7 @@ export default {
     },
 
     createReply(reply){
-<<<<<<< HEAD
-        return axios.post('/forum/topic/add-post', reply)
-=======
         return axios.post("/forum/topic/add-post", reply)
->>>>>>> main
     }
 
 }

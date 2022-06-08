@@ -42,7 +42,7 @@ export default {
 <style>
 
 .entireHome{
-  background-color:#93E9BE;
+  background-color:#98FB98;
   
 }
 
