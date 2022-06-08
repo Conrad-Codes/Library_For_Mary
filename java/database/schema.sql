@@ -49,7 +49,7 @@ CREATE TABLE book (
 	published_date date,
 	cover_art varchar,
 	series_id int,
-	genre_id int,
+--	genre_id int,-- commented out, moving back to genre list
 	date_created date DEFAULT CURRENT_DATE,
 	CONSTRAINT pk_book_id PRIMARY KEY (book_id),
 	constraint fk_series_series_id FOREIGN KEY (series_id) REFERENCES series(series_id),
@@ -71,16 +71,15 @@ CREATE TABLE book_author (
 	constraint fk_book_book_id foreign key (book_id) references book(book_id)	
 );
 
-
-
--- CREATE TABLE book_genre (
--- 	book_genre_id serial,
--- 	book_id int,
--- 	genre_id int,
--- 	constraint pk_book_genre_id primary key (book_genre_id),
--- 	constraint fk_book_book_id foreign key (book_id) references book(book_id),
--- 	constraint fk_genre_genre_id foreign key (genre_id) references genre(genre_id)
--- );
+-- uncommented
+CREATE TABLE book_genre (
+ 	book_genre_id serial,
+ 	book_id int,
+ 	genre_id int,
+ 	constraint pk_book_genre_id primary key (book_genre_id),
+ 	constraint fk_book_book_id foreign key (book_id) references book(book_id),
+ 	constraint fk_genre_genre_id foreign key (genre_id) references genre(genre_id)
+);
 
 CREATE TABLE user_reading_list (
 	list_id serial,

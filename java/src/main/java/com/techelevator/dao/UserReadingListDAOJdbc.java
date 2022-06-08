@@ -129,6 +129,24 @@ public class UserReadingListDAOJdbc implements UserReadingListDAO {
         return authors;
     }
 
+    private List<String> listOfGenresByBookID( int bookID ) {
+        List<String> genres = new ArrayList<>();
+
+        String sql = "SELECT genre_name FROM genre "
+                + "JOIN book_genre ON genre.genre_id = book_genre.book_genre_id" +
+                "WHERE book_id = (SELECT id FROM book WHERE id = ?)";
+
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, bookID);
+        while(results.next()) {
+            String genre = results.getString("genre_name");
+            genres.add(genre);
+        }
+
+        return genres;
+    }
+
+
+
     private String getGenreByBookID(int bookID ) {
         String genre = "";
         String sql = "SELECT genre_name FROM genre "
@@ -162,8 +180,9 @@ public class UserReadingListDAOJdbc implements UserReadingListDAO {
         book.setImgUrl(rowSet.getString("cover_art"));
         book.setInitialPublishDate(rowSet.getDate("published_date").toLocalDate());
         book.setAuthors( listOfAuthorsByBookID( rowSet.getInt("book_id") ) );
-        book.setGenre( getGenreByBookID( rowSet.getInt("book_id") ) );
+        book.setGenre( listOfGenresByBookID( rowSet.getInt("book_id") ) );
         book.setSeries( getBookSeriesBySeriesId(rowSet.getInt("series_id") ) );
+
         return book;
     }
 

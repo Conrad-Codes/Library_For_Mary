@@ -53,6 +53,35 @@ public class BookDAOJdbc implements BookDAO {
         return foundBook;
     }
 
+
+    /*
+    @JsonProperty("book_id")
+    private int id;
+
+    private String title;
+
+    @JsonProperty("author_name")
+    private List<String> authors;
+
+    private String isbn;
+
+    @JsonProperty("genre_name")
+    private List<String> genre;
+
+    private String description;
+
+    @JsonProperty("published_date")
+    private LocalDate initialPublishDate;
+
+    @JsonProperty("cover_art")
+    private String imgUrl;
+
+    @JsonProperty("series")
+    private String series;
+
+    @JsonProperty("date_created")
+    LocalDate dateCreated;
+     */
     @Override
     public void addBook(Book book){
         List<String> genre_names = getGenreTableNames();
@@ -66,21 +95,29 @@ public class BookDAOJdbc implements BookDAO {
         }
         int seriesId = getSeriesId(book.getSeries());
 
-        if (!genre_names.contains(book.getGenre().toLowerCase() )) {
-            String sql1 = "INSERT INTO genre(genre_name)"+
-                    "VALUES(?);";
-            jdbcTemplate.update(sql1,book.getGenre());
-        }
-
-        int genreId = getGenreId(book.getGenre());
-
-        String sql = "INSERT INTO  book (title, description, published_date, cover_art, series_id, genre_id)"+
-                "VALUES (?,?,?,?,?,?);";
+        String sql = "INSERT INTO  book (title, description, published_date, cover_art, series_id )"+
+                "VALUES ( ?, ?, ?, ?, ? );";
 
         jdbcTemplate.update(sql, book.getTitle(), book.getDescription(), book.getInitialPublishDate(),
-                book.getImgUrl(), seriesId, genreId );
+                book.getImgUrl(), seriesId );
 
         int bookId = getBookIdByTitle(book.getTitle());
+
+        // added for loop to search through genres given
+        for( String genre : book.getGenres()) {
+
+            // original if statement, had book.getGenre().toLowerCase() instead
+            if (!genre_names.contains(genre.toLowerCase() )) {
+                String addGenre = "INSERT INTO genre (genre_name)"+
+                        "VALUES(?);";
+                jdbcTemplate.update(addGenre, genre);
+            }
+
+            String addBookGenre = "INSERT INTO book_genre ( book_id, genre_id ) " +
+                    "VALUES( ?, ? );";
+            jdbcTemplate.update( addBookGenre, bookId, getGenreId( genre ) );
+        }
+        //int genreId = getGenreId(book.getGenre());
 
         for (String author : book.getAuthors()) {
             if (!authorNames.contains(author.toLowerCase())) {
@@ -110,15 +147,15 @@ public class BookDAOJdbc implements BookDAO {
         return authors;
     }
 
-    private String getGenreByBookID(int bookID ) {
-        String genre = "";
+    private List<String> getGenreByBookID(int bookID ) {
+        List<String> genres = new ArrayList<>();
         String sql = "SELECT genre_name FROM genre "
                 + "WHERE genre_id = (SELECT genre_id FROM book WHERE book_id = ?);";
        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, bookID);
         if (results.next()) {
-            genre = results.getString("genre_name");
+            genres.add( results.getString("genre_name") );
         }
-        return genre;
+        return genres;
     }
 
     private String getBookSeriesBySeriesId(int seriesID){
