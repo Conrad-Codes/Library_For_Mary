@@ -3,6 +3,7 @@
   <div>
    <h1>Lets Chat!</h1>
     <table id="post-table">
+      <!-- <div>  -->
       <thead>
         <tr>
           <th class="fieldId" v-for="field in fields" :key="field.id">
@@ -10,14 +11,24 @@
           </th>
         </tr>
       </thead>
+      <!-- <div> -->
       <tbody>
+       <!-- <div>  -->
+       <!-- <div>  -->
         <tr class="forumPost" v-for="post in topicPosts" :key="post.post_id">
           <td class="postUserName">
             {{ post.username }}
           </td>
+        <!-- </div> -->
+        <!-- <div>   -->
           <td class="postPost">{{ post.post }}</td>
-          <td class="postDateCreated">{{ post.postCreatedDate }}</td>
+        <!-- </div> -->
+        <!-- <div> -->
+        <td class="postDateCreated">{{ post.postCreatedDate }}</td>
+        <!-- </div> -->
         </tr>
+       
+       <!-- </div>  -->
       </tbody>
     </table>
     
@@ -46,8 +57,7 @@ export default {
 </script>
 
 <style>
- 
-.postUserName{
-  font-family: "Playfair Display SC", serif ;
+.postUserName {
+  font-family: "Playfair Display SC", serif;
 }
 </style>
