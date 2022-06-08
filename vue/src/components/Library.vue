@@ -162,17 +162,17 @@ export default {
 <style>
 div.book-container {
   display: flex;
-  justify-content:start;
+  justify-content:space-evenly;
   flex-wrap: wrap;
 }
 
 div.card {
-   border: solid #C8A2C8 2px;
-   width: 350px;
+   border: solid #fdfdfd 10px;
+   width: 450px; 
 }
 
 .library{
-  background-color: #93E9BE;
+  background-color:  #86ffc3;
  font-family: 'Comfortaa', cursive;
 }
 #filterOptions{

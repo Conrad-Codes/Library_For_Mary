@@ -10,7 +10,6 @@ public class ForumTopic {
     @JsonProperty("topic_id")
     int topicId;
 
-
     @NotBlank ( message = "Topic name cannot be blank" )
     @JsonProperty("topic_name")
     String topicName;

@@ -6,6 +6,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
 
+import java.time.Instant;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -77,8 +79,8 @@ public class ForumDAOJdbc implements ForumDAO{
             }
         }
 
-        String sql = "INSERT INTO forum_topic ( topic_name, user_id, topic_date )\n" +
-                "VALUES( ?, ?, CURRENT_DATE )";
+        String sql = "INSERT INTO forum_topic ( topic_name, user_id )\n" +
+                "VALUES( ?, ? )";
 
        jdbcTemplate.update( sql, topic.getTopicName(), userID );
 
@@ -104,8 +106,8 @@ public class ForumDAOJdbc implements ForumDAO{
 //            return false;
 //        }
 
-        String sql = "INSERT INTO forum_post ( topic_id, post, user_id, post_date )\n" +
-                "VALUES ( ?, ?, ?, CURRENT_DATE );";
+        String sql = "INSERT INTO forum_post ( topic_id, post, user_id )\n" +
+                "VALUES ( ?, ?, ? );";
 
         return jdbcTemplate.update( sql, post.getTopicId(), post.getPost(), userID ) == 1;
     }
@@ -162,7 +164,8 @@ public class ForumDAOJdbc implements ForumDAO{
         topicPost.setTopicId( rowSet.getInt( "topic_id" ) );
         topicPost.setPost( rowSet.getString( "post" ) );
         topicPost.setPostCreatedByUsername( rowSet.getString( "username" ) );
-        topicPost.setPostCreatedDate( rowSet.getDate( "post_date" ).toLocalDate() );
+//        topicPost.setPostCreatedDate( rowSet.getDate( "post_date" ).toLocalDate() );
+        topicPost.setPostCreatedDate( rowSet.getTimestamp( "post_date" ).toLocalDateTime().toString().replace("T", " ") );
 
         return topicPost;
     }
