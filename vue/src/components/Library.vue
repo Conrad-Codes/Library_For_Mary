@@ -167,13 +167,14 @@ div.book-container {
 }
 
 div.card {
-   border: solid #fdfdfd 10px;
+   border: solid #6fbeff 10px;
    width: 450px; 
 }
 
 .library{
-  background-color:  #86ffc3;
- font-family: 'Comfortaa', cursive;
+  background-color:  #a4facf;
+  font-family: 'Comfortaa', cursive;
+  grid-area: main;
 }
 #filterOptions{
   position: absolute;

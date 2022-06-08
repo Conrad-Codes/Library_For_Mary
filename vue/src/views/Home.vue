@@ -42,7 +42,8 @@ export default {
 <style>
 
 .entireHome{
-  background-color: #86ffc3;
+  background-color: #a4facf;
+  grid-area: main;
   
 }
 
