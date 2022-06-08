@@ -1,7 +1,7 @@
 <template>
 <!--THIS PORTION IS FOR WHEN YOU CLICK ON THE LINKS ON THE FORUM TOPIC  -->
   <div>
-    {{this.$route.params.id}}
+   <h1>Lets Chat!</h1>
     <table id="post-table">
       <thead>
         <tr>

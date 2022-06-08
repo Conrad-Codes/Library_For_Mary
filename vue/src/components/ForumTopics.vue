@@ -1,7 +1,7 @@
 <template>
   <!-- THIS IS FOR WHEN YOU ARE VIEWING THE FORUM INITIAL TABLE -->
   <div class="topics-list">
-    <button> <router-link class="AddATopicButton" v-bind:to="{name: 'add-a-topic' }">Share Your Thoughts!</router-link>
+    <button class="AddATopicButton"> <router-link  v-bind:to="{name: 'add-a-topic' }">Share Your Thoughts!</router-link>
     </button>
     <table class="topicTable" id="topic-table">
       <thead>
@@ -49,19 +49,20 @@ export default {
 <style>
 .mFPTopicDate{
   font-family: "Comfortaa", cursive;
+ 
 }
 .topicTable{
   text-align: center;
-  align-items: center;
-  justify-content: center;
+  
+  
   /* font-family: "Playfair Display SC", serif; */
 } 
- .forumField{
-  justify-content: center;
+ /* .forumField{
+ 
   
-} 
+}  */
 .createdForumUserName{
-  margin-right: 1rem;
+  
   font-family: "Comfortaa", cursive;
   
 } 
@@ -72,22 +73,33 @@ export default {
 }
 th{
  font-family: "Cinzel", serif; 
- justify-content: space-between;
+
  
  text-align: center;
 }
 tr{
-
+  text-align: center;
+  justify-content: center;
 }
 .topicsList{
   text-align: center;
-  justify-items: center;
+  justify-content: center;
+  left: 50%;
+  right: 50%;
+  justify-content: space-evenly;
   
 }
 .AddATopicButton{
   text-align: center;
-  left: 50%;
+  font-size: 15px;
   
+  margin-left: auto;
+  justify-content: center;
+  justify-items: center;
+  
+}
+div.topicsList{
+  justify-content: center;
 }
 
 
