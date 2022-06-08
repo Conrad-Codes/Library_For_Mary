@@ -67,7 +67,7 @@ public class ForumController {
     }
 
     @RequestMapping( path = "/forum/topic/{postID}", method = RequestMethod.DELETE )
-    public boolean deleteTopicPost( Principal principal, int postID ) {
+    public boolean deleteTopicPost( Principal principal, @PathVariable int postID ) {
         return forumDAO.deletePostByPostID( userDao.findIdByUsername(principal.getName()), postID );
     }
 

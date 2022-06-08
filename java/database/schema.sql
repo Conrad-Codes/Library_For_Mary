@@ -113,7 +113,7 @@ CREATE TABLE forum_post (
 	topic_id int,
 	post varchar NOT NULL,
 	user_id int,
-	post_date date,
+	post_date timestamp DEFAULT LOCALTIMESTAMP(0),
 	constraint pk_post_id primary key (post_id),
 	constraint fk_users_user_id foreign key (user_id) references users(user_id),
 	constraint fk_forum_topic_topic_id foreign key (topic_id) references forum_topic(topic_id)
