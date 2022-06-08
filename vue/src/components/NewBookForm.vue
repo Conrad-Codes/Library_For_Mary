@@ -1,4 +1,4 @@
-<template>
+  <template>
   <form class="new-book-form" v-on:submit.prevent="saveBook">
     <div class="add-book-form">
       <legend>Add a Book:</legend>
