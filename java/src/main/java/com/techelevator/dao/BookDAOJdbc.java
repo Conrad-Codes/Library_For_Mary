@@ -4,6 +4,7 @@ import com.techelevator.model.Book;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -33,7 +34,7 @@ public class BookDAOJdbc implements BookDAO {
     @Override
     public List<Book> listBooks() {
         List <Book> books = new ArrayList<>();
-        String sql = "SELECT book_id, title, description, published_date, cover_art, series_id, genre_id, date_created FROM book;";
+        String sql = "SELECT book_id, title, description, published_date, cover_art, series_id, date_created FROM book;";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
         while(results.next()) {
             Book book = mapRowToBook(results);
@@ -84,7 +85,7 @@ public class BookDAOJdbc implements BookDAO {
      */
     @Override
     public void addBook(Book book){
-        List<String> genre_names = getGenreTableNames();
+        List<String> genreNames = getGenreTableNames();
         List<String> seriesNames = getSeriesTableNames();
         List<String> authorNames = getAuthorTableNames();
 
@@ -103,19 +104,19 @@ public class BookDAOJdbc implements BookDAO {
 
         int bookId = getBookIdByTitle(book.getTitle());
 
-        // added for loop to search through genres given
-        for( String genre : book.getGenres()) {
+        // added loop to search through genres given
+        for( String genre : book.getGenres() ) {
 
             // original if statement, had book.getGenre().toLowerCase() instead
-            if (!genre_names.contains(genre.toLowerCase() )) {
+            if (!genreNames.contains(genre.toLowerCase() )) {
                 String addGenre = "INSERT INTO genre (genre_name)"+
                         "VALUES(?);";
-                jdbcTemplate.update(addGenre, genre);
+                jdbcTemplate.update(addGenre, StringUtils.capitalize( genre ) );
             }
 
             String addBookGenre = "INSERT INTO book_genre ( book_id, genre_id ) " +
                     "VALUES( ?, ? );";
-            jdbcTemplate.update( addBookGenre, bookId, getGenreId( genre ) );
+            jdbcTemplate.update( addBookGenre, bookId, getGenreId( StringUtils.capitalize(genre) ) );
         }
         //int genreId = getGenreId(book.getGenre());
 
@@ -131,7 +132,6 @@ public class BookDAOJdbc implements BookDAO {
 
             jdbcTemplate.update(sql2, getAuthorId(author), bookId);
         }
-
     }
 
     private List <String> listOfAuthorsByBookID( int bookID ) {
@@ -147,12 +147,14 @@ public class BookDAOJdbc implements BookDAO {
         return authors;
     }
 
-    private List<String> getGenreByBookID(int bookID ) {
+    private List<String> listGenresByBookID(int bookID ) {
         List<String> genres = new ArrayList<>();
-        String sql = "SELECT genre_name FROM genre "
-                + "WHERE genre_id = (SELECT genre_id FROM book WHERE book_id = ?);";
+        String sql = "SELECT genre_name FROM genre " +
+                "JOIN book_genre " +
+                "ON genre.genre_id = book_genre.genre_id " +
+                "WHERE book_genre.book_id = ?;";
        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, bookID);
-        if (results.next()) {
+        while (results.next()) {
             genres.add( results.getString("genre_name") );
         }
         return genres;
@@ -276,7 +278,7 @@ public class BookDAOJdbc implements BookDAO {
         book.setImgUrl(rowSet.getString("cover_art"));
         book.setInitialPublishDate(rowSet.getDate("published_date").toLocalDate());
         book.setAuthors( listOfAuthorsByBookID( rowSet.getInt("book_id") ) );
-        book.setGenre( getGenreByBookID( rowSet.getInt("book_id") ) );
+        book.setGenres( listGenresByBookID( rowSet.getInt("book_id") ) );
         book.setSeries(getBookSeriesBySeriesId(rowSet.getInt("series_id")));
         book.setDateCreated(rowSet.getDate("date_created").toLocalDate());
 
