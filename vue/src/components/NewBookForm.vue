@@ -1,7 +1,7 @@
   <template>
   <form class="new-book-form" v-on:submit.prevent="saveBook">
     <div class="add-book-form">
-      <legend>Add a Book:</legend>
+      <h2>Fill Out The Information Below:</h2>
 
       <label id="titleLabel" for="title">Title:</label>
       <div class="input">
