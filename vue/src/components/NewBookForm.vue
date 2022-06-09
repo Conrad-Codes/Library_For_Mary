@@ -1,16 +1,21 @@
   <template>
   <form class="new-book-form" v-on:submit.prevent="saveBook">
+<!-- <div> -->
     <div class="add-book-form">
       <legend>Add a Book:</legend>
 
+      <!-- <AddBookTitle 
+      :items= this.titleItems
+      v-model= book.title
+      /> -->
       <label id="titleLabel" for="title">Title:</label>
-      <div class="input autocomplete">
+      <div id="titleInput" class="input autocomplete">
         <input
           class="title-input "
           type="text"
           placeholder="Title"
           v-model="book.title"
-          @input="onChange"
+          @input="onTitleChange"
         />
         <ul
           v-show= "isTitleOpen"
@@ -19,6 +24,7 @@
             v-for="(result, i) in titleResults"
             :key=i
             class="autocomplete-result title-result"
+            @click="setTitleResult(result)"
             >
             {{result}}
           </li>
@@ -68,6 +74,7 @@
           v-model="book.genre_name"
         /><br />
       </div>
+     
       <label for="published_date">Date Published:</label>
       <div class="input">
         <input
@@ -88,6 +95,7 @@
         >
         </textarea>
       </div>
+
       <label class="cover_art">Cover Art:</label><br />
       <div class="input">
         <input
@@ -97,6 +105,7 @@
           v-model="book.cover_art"
         />
       </div>
+
       <br />
       <button>Submit</button>
     </div>
@@ -105,9 +114,14 @@
 
 <script>
 import BookService from "../services/BookService.js";
+// import AddBookTitle from "./AddBookTitle.vue"
 
 export default {
   name: "new-book-form",
+
+  components: {
+    // AddBookTitle
+  },
 
   data() {
     return {
@@ -127,9 +141,21 @@ export default {
     };
   },
   methods: {
+    handleClickOutside(event) {
+      if (!this.$el.contains(event.target)) {
+        this.isTitleOpen = false;
+      }
+    },
+
+    setTitleResult(result) {
+      this.book.title = result;
+      this.isTitleOpen = false;
+    },
+
     filterTitleResults() {
       this.titleResults = this.titleItems.filter(item => item.toLowerCase().indexOf(this.book.title.toLowerCase()) > -1);
     },
+
     onTitleChange() {
       this.filterTitleResults();
       this.isTitleOpen = true;
@@ -159,11 +185,35 @@ export default {
   created() {
     BookService.getBooks().then((response) => {
       this.books = response.data;
-    });
 
-    this.books.forEach(item => this.titleItems.push(item.title));
+      this.books.forEach(item => { 
+      this.titleItems.push(item.title)}
+      );
+      
+    });
+    // window.alert(this.books);
+    // for (let i=0; i<this.books.length; i++){
+    //   window.alert("hi");
+    //   this.titleItems.push(this.book[i].title);
+    // }
+    // this.books.forEach(item => { 
+    //   window.alert(item);
+    //   this.titleItems.push(item.title)}
+    //   );
+    // window.alert("last step");
   },
-  
+
+  mounted() {
+    document.addEventListener('click', this.handleClickOutside);
+    
+    document.getElementById('titleInput').addEventListener('blur', () => {
+    // Write your logic here
+    this.isTitleOpen = false
+  })
+  },
+  destroyed() {
+    document.removeEventListener('click', this.handleClickOutside);
+  },
 };
 </script>
 
