@@ -51,5 +51,8 @@ export default {
 </script>
 
 <style>
+#reply-form{
+  height: 100vh;
+}
 
 </style>

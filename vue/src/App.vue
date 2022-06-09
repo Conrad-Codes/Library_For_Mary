@@ -37,6 +37,7 @@
 <style>                                                   
 #app{
   background-color: #a4facf;
+  min-height: 100vh;
   /* display: grid;
   grid-template-areas: 
     " nav . search"

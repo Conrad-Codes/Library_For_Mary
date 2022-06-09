@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="posts-view">
       <TopicPosts/>
       <ReplyForm />
       </div>
@@ -20,5 +20,9 @@ export default {
 </script>
 
 <style>
+
+.posts-view{
+    height: 100vh;
+}
 
 </style>
