@@ -2,7 +2,9 @@
  <!-- THIS IS WHERE YOU POST A NEW TOPIC -->
   <form class="add-a-topic" v-on:submit.prevent="addTopic">
     <div>
-      <legend>Create a Post</legend>
+      <br/>
+      <legend>Whats On Your Mind?</legend>
+      <br/>
       <label id="forumTitle">Title:</label>
       <div class="TitleInput">
         <input
@@ -24,7 +26,8 @@
         </textarea>
       </div>
       <button>Submit</button>
-      <br />
+      <br/>
+      <br/>
     </div>
   </form>
 </template>
