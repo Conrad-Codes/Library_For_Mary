@@ -1,19 +1,22 @@
 <template>
   <!-- THIS IS FOR WHEN YOU ARE VIEWING THE FORUM INITIAL TABLE -->
   <div class="topics-list">
-    <button class="AddATopicButton"> <router-link  v-bind:to="{name: 'add-a-topic' }">Share Your Thoughts!</router-link>
+    <button class="AddATopicButton">
+      <router-link class="AddATopicButton" v-bind:to="{ name: 'add-a-topic' }"
+        >Share Your Thoughts!</router-link
+      >
     </button>
     <table class="topicTable" id="topic-table">
-      <thead>
-        <tr class="forumField">
-          <th v-for="field in fields" :key="field.id">
-            {{ field }}
-          </th>
+        <tr class='table_headers'>
+      
+            <td>Topics</td>
+            <td>Created By</td>
+            <td>Date Created</td>
+      
         </tr>
-      </thead>
-      <tbody>
+
           <tr v-for="topic in topics" :key="topic.topic_id">
-              <td> 
+              <td class='topic_cell'> 
                   <router-link class="forumTopicLink" v-bind:to="{name: 'topic-posts', params: {id: topic.topic_id}}">
                   {{topic.topic_name}}</router-link>
               </td>
@@ -21,7 +24,6 @@
               <td class="mFPTopicDate"> {{topic.topic_date}} </td>
           </tr>
 
-      </tbody>
     </table>
   </div>
 </template>
@@ -35,7 +37,7 @@ export default {
     return {
       topics: [],
       fields: ["Topic", "Created By", "Date Created"],
-    }
+    };
   },
 
   created() {
@@ -47,60 +49,46 @@ export default {
 </script>
 
 <style>
-.mFPTopicDate{
-  font-family: "Comfortaa", cursive;
- 
-}
-.topicTable{
+
+.topicTable {
   text-align: center;
-  
-  
-  /* font-family: "Playfair Display SC", serif; */
-} 
- /* .forumField{
- 
-  
-}  */
-.createdForumUserName{
-  
-  font-family: "Comfortaa", cursive;
-  
-} 
-.forumTopicLink{
-  margin-right: 1rem;
-   font-family: "Playfair Display SC", serif;
-
 }
-th{
- font-family: "Cinzel", serif; 
+.allThree {
+  grid-template-columns: auto auto auto;
+  grid-template-rows: auto auto auto;
+  grid-template-areas:
+    "forumTopicTitle createdByTitle dateCreatedTitle"
+    "forumTopicLink forumCreatedBy forumDateCreated";
+}
 
- 
- text-align: center;
+
+
+td {
+  width:800px;
 }
 tr{
-  text-align: center;
-  justify-content: center;
-}
-.topicsList{
-  text-align: center;
-  justify-content: center;
-  left: 50%;
-  right: 50%;
-  justify-content: space-evenly;
-  
-}
-.AddATopicButton{
-  text-align: center;
-  font-size: 15px;
-  
-  margin-left: auto;
-  justify-content: center;
-  justify-items: center;
-  
-}
-div.topicsList{
-  justify-content: center;
+  font-family: "Comfortaa", cursive;
+  font-size: 20px;
 }
 
+.topic_cell {
+  text-align: left center;
+  
+}
+
+.table_headers {
+  text-decoration: underline;
+  font-weight: bold;
+  font-family: "Playfair Display SC", serif;
+  font-size: 25px;
+}
+
+
+*/ .AddATopicButton {
+  text-align: right;
+  font-size: 15px;
+}
 
 </style>
+
+   

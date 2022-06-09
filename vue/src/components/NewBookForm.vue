@@ -2,7 +2,7 @@
   <form class="new-book-form" v-on:submit.prevent="saveBook">
 <!-- <div> -->
     <div class="add-book-form">
-      <legend>Add a Book:</legend>
+      <h2>Fill Out The Information Below:</h2>
 
       <!-- <AddBookTitle 
       :items= this.titleItems

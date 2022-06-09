@@ -22,10 +22,8 @@ export default {
 </script>
 
 <style>
-div.header {
-  grid-area: header;
-}
-div.main {
-  grid-area: main;
+div{
+
+ 
 }
 </style>
