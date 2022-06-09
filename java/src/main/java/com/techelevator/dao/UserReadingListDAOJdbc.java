@@ -19,7 +19,7 @@ public class UserReadingListDAOJdbc implements UserReadingListDAO {
     public List<Book> getUserReadingList( int userID ) {
         List<Book> usersReadingList = new ArrayList<>();
         String sql = "SELECT book.book_id, book.title, book.description\n" +
-                ", book.published_date, book.cover_art, book.series_id, book.genre_id \n" +
+                ", book.published_date, book.cover_art, book.series_id\n" +
                 "FROM users\n" +
                 "JOIN user_reading_list\n" +
                 "ON users.user_id = user_reading_list.user_id\n" +
@@ -96,7 +96,7 @@ public class UserReadingListDAOJdbc implements UserReadingListDAO {
     public List<Book> getUserCurrentlyReading(int userID) {
         List <Book> currentReadingList = new ArrayList<>();
         String sql = "SELECT book.book_id, book.title, book.description\n" +
-                ", book.published_date, book.cover_art, book.series_id, book.genre_id\n" +
+                ", book.published_date, book.cover_art, book.series_id\n" +
                 "FROM users\n" +
                 "JOIN user_reading_list\n" +
                 "ON users.user_id = user_reading_list.user_id\n" +
@@ -129,10 +129,28 @@ public class UserReadingListDAOJdbc implements UserReadingListDAO {
         return authors;
     }
 
+    private List<String> listOfGenresByBookID( int bookID ) {
+        List<String> genres = new ArrayList<>();
+
+        String sql = "SELECT genre_name FROM genre "
+                + "JOIN book_genre ON genre.genre_id = book_genre.genre_id " +
+                "WHERE book_id = (SELECT book_id FROM book WHERE book_id = ?)";
+
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, bookID);
+        while(results.next()) {
+            String genre = results.getString("genre_name");
+            genres.add(genre);
+        }
+
+        return genres;
+    }
+
+
+
     private String getGenreByBookID(int bookID ) {
         String genre = "";
-        String sql = "SELECT genre_name FROM genre "
-                + "WHERE genre_id = (SELECT genre_id FROM book WHERE book_id = ?);";
+        String sql = "SELECT genre_name FROM genre " +
+                "WHERE genre_id = (SELECT genre_id FROM book_genre WHERE book_id = ? );";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql, bookID);
         if (results.next()) {
             genre = results.getString("genre_name");
@@ -152,7 +170,6 @@ public class UserReadingListDAOJdbc implements UserReadingListDAO {
         return series;
     }
 
-
     private Book mapRowToBook( SqlRowSet rowSet ) {
         Book book = new Book();
 
@@ -162,8 +179,9 @@ public class UserReadingListDAOJdbc implements UserReadingListDAO {
         book.setImgUrl(rowSet.getString("cover_art"));
         book.setInitialPublishDate(rowSet.getDate("published_date").toLocalDate());
         book.setAuthors( listOfAuthorsByBookID( rowSet.getInt("book_id") ) );
-        book.setGenre( getGenreByBookID( rowSet.getInt("book_id") ) );
+        book.setGenres( listOfGenresByBookID( rowSet.getInt("book_id") ) );
         book.setSeries( getBookSeriesBySeriesId(rowSet.getInt("series_id") ) );
+
         return book;
     }
 

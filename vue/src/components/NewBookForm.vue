@@ -1,4 +1,4 @@
-<template>
+  <template>
   <form class="new-book-form" v-on:submit.prevent="saveBook">
     <div class="add-book-form">
       <legend>Add a Book:</legend>
@@ -48,14 +48,29 @@
       </div>
 
       <label for="genre_name">Genre:</label>
-      <div class="input">
+      <div v-for="(genre, index) in book.genre_name" v-bind:key="`genre-${index}`" class="input">
         <input
           class="genre_name-input"
           type="text"
           placeholder="Genre"
-          v-model="book.genre_name"
-        /><br />
+          v-model="book.genre_name[index]"
+        />
+        <svg
+          @click="addGenre()"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          width="24"
+          height="24"
+          class="ml-2 cursor-pointer"
+        >
+          <path fill="none" d="M0 0h24v24H0z" />
+          <path
+            fill="green"
+            d="M11 11V7h2v4h4v2h-4v4h-2v-4H7v-2h4zm1 11C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16z"
+          />
+        </svg>
       </div>
+
       <label for="published_date">Date Published:</label>
       <div class="input">
         <input
@@ -103,7 +118,7 @@ export default {
         title: "",
         author_name: [""],
         series: "",
-        genre_name: "",
+        genre_name: [""],
         published_date: "",
         description: "",
         cover_art: "",
@@ -112,7 +127,11 @@ export default {
   },
   methods: {
     addAuthor() {
-        this.book.author_name.push("");
+      this.book.author_name.push("");
+    },
+    // added addGenre for genreList
+    addGenre() {
+      this.book.genre_name.push("");
     },
     saveBook() {
       const input = document.querySelector(".description-input");

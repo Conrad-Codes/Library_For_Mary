@@ -177,15 +177,15 @@ div.card {
   grid-area: main;
 }
 #filterOptions{
-  position: absolute;
-  top: 5.5px;
-  right: 8px;
+  position: relative;
+  bottom: 218px;
+  left: -19%;
 }
 
 #searchOptions{
-  position: absolute;
-  top: 30px;
-  right: 12px;
+  position: relative;
+  bottom: 250px;
+  left: 66%;
   
 }
 </style>

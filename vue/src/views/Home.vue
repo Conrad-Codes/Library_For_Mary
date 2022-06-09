@@ -1,8 +1,9 @@
 <template>
   <div class="entireHome">
+    
     <div class="home">
       <h1 class="Mary">Welcome to Mary's Magnificent Library</h1>
-      <p>Home of your next favorite book!</p>
+      <p>Our Collection Of Books!</p>
     </div>
     
     <div>
