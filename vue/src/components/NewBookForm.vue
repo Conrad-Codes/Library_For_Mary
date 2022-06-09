@@ -1,34 +1,16 @@
-  <template>
+ <template>
   <form class="new-book-form" v-on:submit.prevent="saveBook">
-<!-- <div> -->
     <div class="add-book-form">
       <h2>Fill Out The Information Below:</h2>
 
-      <!-- <AddBookTitle 
-      :items= this.titleItems
-      v-model= book.title
-      /> -->
       <label id="titleLabel" for="title">Title:</label>
-      <div id="titleInput" class="input autocomplete">
+      <div class="input">
         <input
-          class="title-input "
+          class="title-input"
           type="text"
           placeholder="Title"
           v-model="book.title"
-          @input="onTitleChange"
         />
-        <ul
-          v-show= "isTitleOpen"
-          class="autocomplete-results title-results">
-          <li 
-            v-for="(result, i) in titleResults"
-            :key=i
-            class="autocomplete-result title-result"
-            @click="setTitleResult(result)"
-            >
-            {{result}}
-          </li>
-        </ul>
       </div>
 
       <label for="author_name">Author:</label>
@@ -88,7 +70,6 @@
           />
         </svg>
       </div>
-     
 
       <label for="published_date">Date Published:</label>
       <div class="input">
@@ -110,7 +91,6 @@
         >
         </textarea>
       </div>
-
       <label class="cover_art">Cover Art:</label><br />
       <div class="input">
         <input
@@ -120,7 +100,6 @@
           v-model="book.cover_art"
         />
       </div>
-
       <br />
       <button>Submit</button>
     </div>
@@ -129,21 +108,12 @@
 
 <script>
 import BookService from "../services/BookService.js";
-// import AddBookTitle from "./AddBookTitle.vue"
 
 export default {
   name: "new-book-form",
 
-  components: {
-    // AddBookTitle
-  },
-
   data() {
     return {
-      titleResults: [],
-      titleItems: [],
-      isTitleOpen: false,
-      books: [],
       book: {
         title: "",
         author_name: [""],
@@ -156,26 +126,6 @@ export default {
     };
   },
   methods: {
-    handleClickOutside(event) {
-      if (!this.$el.contains(event.target)) {
-        this.isTitleOpen = false;
-      }
-    },
-
-    setTitleResult(result) {
-      this.book.title = result;
-      this.isTitleOpen = false;
-    },
-
-    filterTitleResults() {
-      this.titleResults = this.titleItems.filter(item => item.toLowerCase().indexOf(this.book.title.toLowerCase()) > -1);
-    },
-
-    onTitleChange() {
-      this.filterTitleResults();
-      this.isTitleOpen = true;
-    },
-
     addAuthor() {
       this.book.author_name.push("");
     },
@@ -198,71 +148,22 @@ export default {
         .catch((error) => {
           console.error(error);
         });
+      //    const bookID = this.$route.params.id;
+      //    this.book.bookID = bookID
+      //    this.book = {
+      //         title: '',
+      //         author: '',
+      //         series:  '',
+      //         genre_name: '',
+      //         datePublished: ''
+      //    };
+      //    this.$router.push('/add-book');
     },
-  },
-
-  created() {
-    BookService.getBooks().then((response) => {
-      this.books = response.data;
-
-      this.books.forEach(item => { 
-      this.titleItems.push(item.title)}
-      );
-      
-    });
-    // window.alert(this.books);
-    // for (let i=0; i<this.books.length; i++){
-    //   window.alert("hi");
-    //   this.titleItems.push(this.book[i].title);
-    // }
-    // this.books.forEach(item => { 
-    //   window.alert(item);
-    //   this.titleItems.push(item.title)}
-    //   );
-    // window.alert("last step");
-  },
-
-  mounted() {
-    document.addEventListener('click', this.handleClickOutside);
-    
-    document.getElementById('titleInput').addEventListener('blur', () => {
-    // Write your logic here
-    this.isTitleOpen = false
-  })
-  },
-  destroyed() {
-    document.removeEventListener('click', this.handleClickOutside);
   },
 };
 </script>
 
 <style>
-.autocomplete {
-    position: relative;
-  }
-
-  .autocomplete-results {
-    padding: 0;
-    margin: 0;
-    border: 1px solid #eeeeee;
-    height: 120px;
-    min-height: 1em;
-    max-height: 6em;    
-    overflow: auto;
-  }
-
-  .autocomplete-result {
-    list-style: none;
-    text-align: left;
-    padding: 4px 2px;
-    cursor: pointer;
-  }
-
-  .autocomplete-result:hover {
-    background-color: #4AAE9B;
-    color: white;
-  }
-
 label {
   font-size: 25px;
  
