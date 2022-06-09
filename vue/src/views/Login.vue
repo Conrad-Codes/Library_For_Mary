@@ -1,5 +1,6 @@
 <template>
   <div id="login" class="text-center">
+    <h1 class="Mary">Login To Mary's Magnificent Library</h1>
     <form class="form-signin" @submit.prevent="login">
       <br>
       <router-link :to="{ name: 'register' }">Want more access? Create an account!</router-link>

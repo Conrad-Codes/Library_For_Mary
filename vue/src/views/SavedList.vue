@@ -1,9 +1,10 @@
 
 <template>
 <div class="lists">
-    <h1>Currently Reading</h1>
+    <h1 class="Mary">What Are You Reading From Mary's Magnificent Library</h1>
+    <h2>Currently Reading</h2>
     <currently-reading-list/>
-    <h1>Reading List</h1>
+    <h2>Reading List</h2>
     <reading-list/>
 </div>
 </template>
