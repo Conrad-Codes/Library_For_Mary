@@ -7,7 +7,7 @@ DROP TABLE IF EXISTS book_genre;
 DROP TABLE IF EXISTS genre CASCADE;
 DROP TABLE IF EXISTS reading_list;
 DROP TABLE IF EXISTS user_reading_list;
-DROP TABLE IF EXISTS book_comment;
+--DROP TABLE IF EXISTS book_comment;
 DROP TABLE IF EXISTS book CASCADE;
 DROP TABLE IF EXISTS users CASCADE;
 DROP TABLE IF EXISTS series;
@@ -49,10 +49,11 @@ CREATE TABLE book (
 	published_date date,
 	cover_art varchar,
 	series_id int,
-	genre_id int,
+--	genre_id int,-- commented out, moving back to genre list
+	date_created date DEFAULT CURRENT_DATE,
 	CONSTRAINT pk_book_id PRIMARY KEY (book_id),
-	constraint fk_series_series_id FOREIGN KEY (series_id) REFERENCES series(series_id),
-	constraint fk_genre_genre_id FOREIGN KEY (genre_id) REFERENCES genre(genre_id)
+	constraint fk_series_series_id FOREIGN KEY (series_id) REFERENCES series(series_id)
+--	constraint fk_genre_genre_id FOREIGN KEY (genre_id) REFERENCES genre(genre_id)
 );
 
 CREATE TABLE author (
@@ -70,16 +71,15 @@ CREATE TABLE book_author (
 	constraint fk_book_book_id foreign key (book_id) references book(book_id)	
 );
 
-
-
--- CREATE TABLE book_genre (
--- 	book_genre_id serial,
--- 	book_id int,
--- 	genre_id int,
--- 	constraint pk_book_genre_id primary key (book_genre_id),
--- 	constraint fk_book_book_id foreign key (book_id) references book(book_id),
--- 	constraint fk_genre_genre_id foreign key (genre_id) references genre(genre_id)
--- );
+-- uncommented
+CREATE TABLE book_genre (
+ 	book_genre_id serial,
+ 	book_id int,
+ 	genre_id int,
+ 	constraint pk_book_genre_id primary key (book_genre_id),
+ 	constraint fk_book_book_id foreign key (book_id) references book(book_id),
+ 	constraint fk_genre_genre_id foreign key (genre_id) references genre(genre_id)
+);
 
 CREATE TABLE user_reading_list (
 	list_id serial,
@@ -112,7 +112,7 @@ CREATE TABLE forum_post (
 	topic_id int,
 	post varchar NOT NULL,
 	user_id int,
-	post_date date,
+	post_date timestamp DEFAULT LOCALTIMESTAMP(0),
 	constraint pk_post_id primary key (post_id),
 	constraint fk_users_user_id foreign key (user_id) references users(user_id),
 	constraint fk_forum_topic_topic_id foreign key (topic_id) references forum_topic(topic_id)
@@ -142,21 +142,21 @@ VALUES ('J R R Tolkien'), ('Robert Jordan'), ('Brandon Sanderson'), ('Terry Prat
 INSERT INTO genre (genre_name)
 VALUES ('Science Fiction'), ('Fantasy'), ('Adventure'), ('Thriller'), ('Drama'), ('Mystery'), ('Suspense');
 
-INSERT INTO book (title, isbn, description, published_date, cover_art, series_id, genre_id)
-VALUES ('The Fellowship of the Ring', '9780547928210', 'The beginning of a great adventure!', '07/29/1954', 'https://images-na.ssl-images-amazon.com/images/I/41gHG-a2OEL._SX331_BO1,204,203,200_.jpg', 1, 2 ),
-		('The Two Towers', '9780547928203', 'The middle of a great adventure!', '11/11/1954', 'https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQRVeocJMduZrDIU2VmU5_i_TW8TGKLaMZ0LFckBxFFzJMdBy56', 1, 2),
-		('The Return of the King', '9780547928210', 'The end of a great adventure!', '10/20/1955', 'https://i.harperapps.com/hcanz/covers/9780261103597/x293.jpg',1, 2),
-		('The Eye of the World', '9780312850098', 'The start of an Epic adventure!', '01/15/1990', 'https://images-na.ssl-images-amazon.com/images/I/81tBoQP5V+L.jpg', 2, 2),
-		('A Memory of Light', '9780765325952', 'The end of an Epic adventure!', '01/08/2013', 'https://images-na.ssl-images-amazon.com/images/I/81DcFQRTuOL.jpg', 2, 2),
-		('Mort', '9780062225719', 'Mort gets an offer he can not refuse.', '11/12/1987', 'https://m.media-amazon.com/images/I/41RwpLn8FuL.jpg', 3, 2 ),
-		('The Name of the Wind', '9780756404741', 'The tale of Kvothe begins.','03/27/2007', 'https://images-na.ssl-images-amazon.com/images/I/91b8oNwaV1L.jpg', 4, 2),
-		('The Wise man''s Fear', '9780756407919', 'The tale of Kvothe continues!', '03/01/2011', 'https://m.media-amazon.com/images/I/51qKDJ8lPeL.jpg', 4, 2),
-		('A Game of Thrones', '9780553381689', 'When you play the game of thrones, you win or you die. There is no middle ground.', '08/01/1996', 'https://images-na.ssl-images-amazon.com/images/I/914uNuOXwSL.jpg', 5, 2),
-		('A Dance with Dragons', '9780553582017', 'Spoiler: Pretty much everyone dies', '07/12/2011', 'https://images-na.ssl-images-amazon.com/images/I/81e1rZDeBBL.jpg', 5, 2),
-		('The Left Hand of Darkness', '9780441478125', 'Open yourself to Winter', '03/01/1969', 'https://images-na.ssl-images-amazon.com/images/I/81EtwGcbbpL.jpg', 6, 1);
+INSERT INTO book (title, isbn, description, published_date, cover_art, series_id, date_created)
+VALUES ('The Fellowship of the Ring', '9780547928210', 'The beginning of a great adventure!', '07/29/1954', 'https://images-na.ssl-images-amazon.com/images/I/41gHG-a2OEL._SX331_BO1,204,203,200_.jpg', 1, '2001-02-12' ),
+		('The Two Towers', '9780547928203', 'The middle of a great adventure!', '11/11/1954', 'https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQRVeocJMduZrDIU2VmU5_i_TW8TGKLaMZ0LFckBxFFzJMdBy56', 1, '2020-06-06'),
+		('The Return of the King', '9780547928210', 'The end of a great adventure!', '10/20/1955', 'https://i.harperapps.com/hcanz/covers/9780261103597/x293.jpg',1, '1999-07-04'),
+		('The Eye of the World', '9780312850098', 'The start of an Epic adventure!', '01/15/1990', 'https://images-na.ssl-images-amazon.com/images/I/81tBoQP5V+L.jpg', 2, '2016-12-25'),
+		('A Memory of Light', '9780765325952', 'The end of an Epic adventure!', '01/08/2013', 'https://images-na.ssl-images-amazon.com/images/I/81DcFQRTuOL.jpg', 2, '2022-01-01'),
+		('Mort', '9780062225719', 'Mort gets an offer he can not refuse.', '11/12/1987', 'https://m.media-amazon.com/images/I/41RwpLn8FuL.jpg', 3, '2021-02-12' ),
+		('The Name of the Wind', '9780756404741', 'The tale of Kvothe begins.','03/27/2007', 'https://images-na.ssl-images-amazon.com/images/I/91b8oNwaV1L.jpg', 4, '2015-11-27'),
+		('The Wise man''s Fear', '9780756407919', 'The tale of Kvothe continues!', '03/01/2011', 'https://m.media-amazon.com/images/I/51qKDJ8lPeL.jpg', 4, '2021-05-16'),
+		('A Game of Thrones', '9780553381689', 'When you play the game of thrones, you win or you die. There is no middle ground.', '08/01/1996', 'https://images-na.ssl-images-amazon.com/images/I/914uNuOXwSL.jpg', 5, '2022-05-08'),
+		('A Dance with Dragons', '9780553582017', 'Spoiler: Pretty much everyone dies', '07/12/2011', 'https://images-na.ssl-images-amazon.com/images/I/81e1rZDeBBL.jpg', 5, '2007-11-12'),
+		('The Left Hand of Darkness', '9780441478125', 'Open yourself to Winter', '03/01/1969', 'https://images-na.ssl-images-amazon.com/images/I/81EtwGcbbpL.jpg', 6, '2010-02-16');
 
--- INSERT INTO book_genre (book_id, genre_id)
--- VALUES (1,2), (2,2), (3,2), (4,2), (5,2), (6,2), (7,2), (8,2), (9,2), (10,2), (11,1);
+ INSERT INTO book_genre (book_id, genre_id)
+ VALUES (1,2), (1, 3), (2,2), (3,2), (4,2), (5,2), (6,2), (7,2), (8,2), (9,2), (10,2), (11,1);
 
 INSERT INTO book_author (author_id, book_id)
 VALUES	(1,1), (1,2), (1,3), (2,4), (2,5), (3,5), (4,6), (5,7), (5,8), (6,9), (6,10), (7,11);

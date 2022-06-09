@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class TopicPost {
     @JsonProperty( "post_id" )
@@ -16,7 +17,7 @@ public class TopicPost {
     @JsonProperty( "username" )
     String postCreatedByUsername;
     @JsonProperty( "topic_date" )
-    LocalDate PostCreatedDate;
+    String PostCreatedDate;
 
     public int getPostId() {
         return postId;
@@ -50,11 +51,11 @@ public class TopicPost {
         this.postCreatedByUsername = postCreatedByUsername;
     }
 
-    public LocalDate getPostCreatedDate() {
+    public String getPostCreatedDate() {
         return PostCreatedDate;
     }
 
-    public void setPostCreatedDate(LocalDate postCreatedDate) {
+    public void setPostCreatedDate(String postCreatedDate) {
         PostCreatedDate = postCreatedDate;
     }
 }

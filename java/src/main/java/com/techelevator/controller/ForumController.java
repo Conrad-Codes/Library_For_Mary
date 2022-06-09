@@ -40,7 +40,7 @@ public class ForumController {
 
     @ResponseStatus( HttpStatus.CREATED )
     @RequestMapping( path = "/forum/add-forum-topic", method = RequestMethod.POST )
-    public boolean addForumTopic(Principal principal, @RequestBody ForumTopic forumTopic ) {
+    public boolean addForumTopic(Principal principal, @Valid @RequestBody ForumTopic forumTopic ) {
         return forumDAO.addTopicToForum(
                 userDao.findIdByUsername( principal.getName() )
                 , forumTopic
@@ -67,7 +67,7 @@ public class ForumController {
     }
 
     @RequestMapping( path = "/forum/topic/{postID}", method = RequestMethod.DELETE )
-    public boolean deleteTopicPost( Principal principal, int postID ) {
+    public boolean deleteTopicPost( Principal principal, @PathVariable int postID ) {
         return forumDAO.deletePostByPostID( userDao.findIdByUsername(principal.getName()), postID );
     }
 

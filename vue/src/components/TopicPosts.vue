@@ -1,22 +1,20 @@
 <template>
+  <!--THIS PORTION IS FOR WHEN YOU CLICK ON THE LINKS ON THE FORUM TOPIC  -->
   <div>
+    <h1>Lets Chat!</h1>
     <table id="post-table">
-      <thead>
-        <tr>
-          <th v-for="field in fields" :key="field.id">
-            {{ field }}
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="post in topicPosts" :key="post.post_id">
-          <td>
-            {{ post.username }}
-          </td>
-          <td>{{ post.post }}</td>
-          <td>{{ post.postCreatedDate }}</td>
-        </tr>
-      </tbody>
+      <tr class="forumHeaders">
+        <td>User</td>
+        <td>Post</td>
+        <td>Date Created</td>
+      </tr>
+      <tr class="forumPost" v-for="post in topicPosts" :key="post.post_id">
+        <td class="postUserName">
+          {{ post.username }}
+        </td>
+        <td class="postPost">{{ post.post }}</td>
+        <td class="postDateCreated">{{ post.postCreatedDate }}</td>
+      </tr>
     </table>
   </div>
 </template>
@@ -43,4 +41,19 @@ export default {
 </script>
 
 <style>
+
+.forumHeaders{
+  text-decoration: underline;
+  font-weight: bold;
+  font-family: "Playfair Display SC", serif;
+  font-size: 25px;
+}
+td {
+  width:800px;
+  text-align: center;
+  
+}
+.forumPost{
+  font-family: "Comfortaa", cursive;
+}
 </style>

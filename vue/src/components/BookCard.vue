@@ -139,6 +139,7 @@ export default {
   margin: 5px;
   color: black;
   border-radius: 25px;
+  font-size: 15px;
 }
 
 .cover-art {
@@ -148,6 +149,7 @@ export default {
 
 .book-description {
   font-family: "Comfortaa", cursive;
+  font-size: 15PX;
 }
 
 .book-title {

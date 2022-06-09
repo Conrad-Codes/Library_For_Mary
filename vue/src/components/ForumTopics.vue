@@ -1,25 +1,29 @@
 <template>
+  <!-- THIS IS FOR WHEN YOU ARE VIEWING THE FORUM INITIAL TABLE -->
   <div class="topics-list">
-
-    <table id="topic-table">
-      <thead>
-        <tr>
-          <th v-for="field in fields" :key="field.id">
-            {{ field }}
-          </th>
+    <button class="AddATopicButton">
+      <router-link class="AddATopicButton" v-bind:to="{ name: 'add-a-topic' }"
+        >Share Your Thoughts!</router-link
+      >
+    </button>
+    <table class="topicTable" id="topic-table">
+        <tr class='table_headers'>
+      
+            <td>Topics</td>
+            <td>Created By</td>
+            <td>Date Created</td>
+      
         </tr>
-      </thead>
-      <tbody>
+
           <tr v-for="topic in topics" :key="topic.topic_id">
-              <td> 
-                  <router-link v-bind:to="{name: 'topic-posts', params: {id: topic.topic_id}}">
+              <td class='topic_cell'> 
+                  <router-link class="forumTopicLink" v-bind:to="{name: 'topic-posts', params: {id: topic.topic_id}}">
                   {{topic.topic_name}}</router-link>
               </td>
-              <td> {{topic.createdByUsername}}</td>
-              <td> {{topic.topic_date}} </td>
+              <td class="createdForumUserName"> {{topic.createdByUsername}}</td>
+              <td class="mFPTopicDate"> {{topic.topic_date}} </td>
           </tr>
 
-      </tbody>
     </table>
   </div>
 </template>
@@ -45,4 +49,46 @@ export default {
 </script>
 
 <style>
+
+.topicTable {
+  text-align: center;
+}
+.allThree {
+  grid-template-columns: auto auto auto;
+  grid-template-rows: auto auto auto;
+  grid-template-areas:
+    "forumTopicTitle createdByTitle dateCreatedTitle"
+    "forumTopicLink forumCreatedBy forumDateCreated";
+}
+
+
+
+td {
+  width:800px;
+}
+tr{
+  font-family: "Comfortaa", cursive;
+  font-size: 20px;
+}
+
+.topic_cell {
+  text-align: left center;
+  
+}
+
+.table_headers {
+  text-decoration: underline;
+  font-weight: bold;
+  font-family: "Playfair Display SC", serif;
+  font-size: 25px;
+}
+
+
+*/ .AddATopicButton {
+  text-align: right;
+  font-size: 15px;
+}
+
 </style>
+
+   

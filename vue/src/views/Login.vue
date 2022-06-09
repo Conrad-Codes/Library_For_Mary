@@ -1,5 +1,6 @@
 <template>
   <div id="login" class="text-center">
+    <!-- <h1 class="Mary">Login To Mary's Magnificent Library</h1> -->
     <form class="form-signin" @submit.prevent="login">
       <br>
       <router-link :to="{ name: 'register' }">Want more access? Create an account!</router-link>
@@ -14,7 +15,7 @@
         role="alert"
         v-if="this.$route.query.registration"
       >Thank you for registering, please sign in.</div>
-      <label for="username" class="sr-only">Username</label>
+      <label for="username" class="sr-only1">Username</label>
       <input
         type="text"
         id="username"
@@ -24,7 +25,8 @@
         required
         autofocus
       />
-      <label for="password" class="sr-only">Password</label>
+       |  
+      <label for="password" class="sr-only2">   Password</label>
       <input
         type="password"
         id="password"
@@ -81,7 +83,14 @@ export default {
 };
 </script>
 <style>
-
+.text-center {
+font-size: 50px;
+}
+.Mary{
+  font-size: 40px;
+}
+.h3{
+  font-size: 43px;
+}
 </style>
-
 

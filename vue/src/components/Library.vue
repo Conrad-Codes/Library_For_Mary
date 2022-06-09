@@ -46,6 +46,15 @@
       />
       <label for="publishDate">Date Published</label>
 
+      <input
+        type="radio"
+        id="dateAdded"
+        name="category_search"
+        value="dateAdded"
+        v-model="radioVal"
+      />
+      <label for="dateAdded">Date Added</label>
+
     </form>
 
     <div id="searchOptions">
@@ -130,6 +139,12 @@ export default {
           books.series.toLowerCase().includes(this.searchTerm.toLowerCase())
         );
       }
+
+      if (this.radioVal === "dateAdded") {
+        bookList = bookList.filter((books) =>
+          books.date_created > this.searchTerm);
+      }
+
       return bookList;
     },
   },
@@ -147,29 +162,30 @@ export default {
 <style>
 div.book-container {
   display: flex;
-  justify-content:start;
+  justify-content:space-evenly;
   flex-wrap: wrap;
 }
 
 div.card {
-   border: solid #C8A2C8 2px;
-   width: 350px;
+   border: solid #6fbeff 10px;
+   width: 450px; 
 }
 
 .library{
-  background-color: #93E9BE;
- font-family: 'Comfortaa', cursive;
+  background-color:  #a4facf;
+  font-family: 'Comfortaa', cursive;
+  grid-area: main;
 }
 #filterOptions{
-  position: absolute;
-  top: 5.5px;
-  right: 8px;
+  position: relative;
+  bottom: 218px;
+  left: -19%;
 }
 
 #searchOptions{
-  position: absolute;
-  top: 30px;
-  right: 12px;
+  position: relative;
+  bottom: 250px;
+  left: 66%;
   
 }
 </style>

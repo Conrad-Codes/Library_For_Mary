@@ -6,6 +6,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
 
+import java.time.Instant;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,7 +61,8 @@ public class ForumDAOJdbc implements ForumDAO{
                 "ON forum_post.topic_id = forum_topic.topic_id\n" +
                 "JOIN users\n" +
                 "ON forum_post.user_id = users.user_id\n" +
-                "WHERE forum_post.topic_id = ?;";
+                "WHERE forum_post.topic_id = ? " +
+                "ORDER BY forum_post.post_date;";
         SqlRowSet results = jdbcTemplate.queryForRowSet( sql, topicId );
         while( results.next() ) {
             TopicPost topicPost = mapRowToTopicPost( results );
@@ -79,7 +82,22 @@ public class ForumDAOJdbc implements ForumDAO{
         String sql = "INSERT INTO forum_topic ( topic_name, user_id )\n" +
                 "VALUES( ?, ? )";
 
-        return jdbcTemplate.update( sql, topic.getTopicName(), userID ) == 1;
+       jdbcTemplate.update( sql, topic.getTopicName(), userID );
+
+        TopicPost initPost = new TopicPost();
+        initPost.setPost(topic.getInitialPost());
+
+        sql = "SELECT topic_id FROM forum_topic WHERE topic_name like ? AND user_id = ?;";
+
+        SqlRowSet result = jdbcTemplate.queryForRowSet(sql, topic.getTopicName(), userID);
+
+        if (result.next()) {
+            initPost.setTopicId(result.getInt("topic_id"));
+        }else {
+            return false;
+        }
+        System.out.println(initPost.getTopicId());
+        return addPostToTopic(userID, initPost);
     }
 
     @Override
@@ -88,8 +106,8 @@ public class ForumDAOJdbc implements ForumDAO{
 //            return false;
 //        }
 
-        String sql = "INSERT INTO forum_post ( topic_id, post, user_id, post_date )\n" +
-                "VALUES ( ?, ?, ?, CURRENT_TIME );";
+        String sql = "INSERT INTO forum_post ( topic_id, post, user_id )\n" +
+                "VALUES ( ?, ?, ? );";
 
         return jdbcTemplate.update( sql, post.getTopicId(), post.getPost(), userID ) == 1;
     }
@@ -146,7 +164,8 @@ public class ForumDAOJdbc implements ForumDAO{
         topicPost.setTopicId( rowSet.getInt( "topic_id" ) );
         topicPost.setPost( rowSet.getString( "post" ) );
         topicPost.setPostCreatedByUsername( rowSet.getString( "username" ) );
-        topicPost.setPostCreatedDate( rowSet.getDate( "post_date" ).toLocalDate() );
+//        topicPost.setPostCreatedDate( rowSet.getDate( "post_date" ).toLocalDate() );
+        topicPost.setPostCreatedDate( rowSet.getTimestamp( "post_date" ).toLocalDateTime().toString().replace("T", " ") );
 
         return topicPost;
     }
