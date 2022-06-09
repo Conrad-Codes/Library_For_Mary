@@ -42,6 +42,7 @@
     " nav . search"
     "main main main"
     "main main main" */
+    min-height: 100vh;
 
 }
 
