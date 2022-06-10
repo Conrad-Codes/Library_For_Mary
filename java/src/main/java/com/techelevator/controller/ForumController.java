@@ -71,4 +71,9 @@ public class ForumController {
         return forumDAO.deletePostByPostID( userDao.findIdByUsername(principal.getName()), postID );
     }
 
+    @RequestMapping( path = "/forum/topic-name/{topicID}", method = RequestMethod.GET )
+    public ForumTopic getForumTopicByTopicID( @PathVariable int topicID ) {
+        return forumDAO.getTopicByTopicId( topicID );
+    }
+
 }

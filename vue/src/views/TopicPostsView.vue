@@ -1,6 +1,7 @@
 <template>
   <div>
       <TopicPosts/>
+      <br/>
       <ReplyForm />
       </div>
 </template>

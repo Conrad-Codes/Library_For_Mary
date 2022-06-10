@@ -2,6 +2,7 @@
   <!--THIS PORTION IS FOR WHEN YOU CLICK ON THE LINKS ON THE FORUM TOPIC  -->
   <div>
     <h1>Lets Chat!</h1>
+    <h2>{{this.topic_name}}</h2>
     <table id="post-table">
       <tr class="forumHeaders">
         <td>User</td>
@@ -29,6 +30,7 @@ export default {
     return {
       topicPosts: [],
       fields: ["User", "Post", "Date Created"],
+      topic_name: ""
     };
   },
 
@@ -36,6 +38,10 @@ export default {
     ForumService.getPostsByTopicId(this.$route.params.id).then((response) => {
       this.topicPosts = response.data;
     });
+
+    ForumService.getTopicName(this.$route.params.id).then((response) => {
+      this.topic_name = response.data.topic_name;
+    })
   },
 };
 </script>

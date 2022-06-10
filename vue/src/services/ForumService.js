@@ -16,6 +16,10 @@ export default {
 
     createReply(reply){
         return axios.post("/forum/topic/add-post", reply)
+    },
+
+    getTopicName(topicID){
+        return axios.get(`/forum/topic-name/${topicID}`)
     }
 
 }

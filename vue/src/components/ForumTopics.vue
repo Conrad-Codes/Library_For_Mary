@@ -7,23 +7,24 @@
       >
     </button>
     <table class="topicTable" id="topic-table">
-        <tr class='table_headers'>
-      
-            <td>Topics</td>
-            <td>Created By</td>
-            <td>Date Created</td>
-      
-        </tr>
+      <tr class="table_headers">
+        <td>Topics</td>
+        <td>Created By</td>
+        <td>Date Created</td>
+      </tr>
 
-          <tr v-for="topic in topics" :key="topic.topic_id">
-              <td class='topic_cell'> 
-                  <router-link class="forumTopicLink" v-bind:to="{name: 'topic-posts', params: {id: topic.topic_id}}">
-                  {{topic.topic_name}}</router-link>
-              </td>
-              <td class="createdForumUserName"> {{topic.createdByUsername}}</td>
-              <td class="mFPTopicDate"> {{topic.topic_date}} </td>
-          </tr>
-
+      <tr v-for="topic in topics" :key="topic.topic_id">
+        <td class="topic_cell">
+          <router-link
+            class="forumTopicLink"
+            v-bind:to="{ name: 'topic-posts', params: { id: topic.topic_id } }"
+          >
+            {{ topic.topic_name }}</router-link
+          >
+        </td>
+        <td class="createdForumUserName">{{ topic.createdByUsername }}</td>
+        <td class="mFPTopicDate">{{ topic.topic_date }}</td>
+      </tr>
     </table>
   </div>
 </template>
@@ -49,7 +50,6 @@ export default {
 </script>
 
 <style>
-
 .topicTable {
   text-align: center;
 }
@@ -61,19 +61,16 @@ export default {
     "forumTopicLink forumCreatedBy forumDateCreated";
 }
 
-
-
 td {
-  width:800px;
+  width: 800px;
 }
-tr{
+tr {
   font-family: "Comfortaa", cursive;
   font-size: 20px;
 }
 
 .topic_cell {
   text-align: left center;
-  
 }
 
 .table_headers {
@@ -83,12 +80,17 @@ tr{
   font-size: 25px;
 }
 
-
 */ .AddATopicButton {
-  text-align: right;
   font-size: 15px;
-}
 
+}
+button.AddATopicButton{
+  position: relative;
+    margin: 0;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
 </style>
 
    

@@ -178,13 +178,13 @@ div.card {
 }
 #filterOptions{
   position: relative;
-  bottom: 218px;
+  bottom: 190px;
   left: -19%;
 }
 
 #searchOptions{
   position: relative;
-  bottom: 250px;
+  bottom: 221px;
   left: 66%;
   
 }

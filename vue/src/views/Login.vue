@@ -3,7 +3,7 @@
     <!-- <h1 class="Mary">Login To Mary's Magnificent Library</h1> -->
     <form class="form-signin" @submit.prevent="login">
       <br>
-      <router-link :to="{ name: 'register' }">Want more access? Create an account!</router-link>
+      <router-link :to="{ name: 'register' }" class="wantAccess">Want more access? Create an account!</router-link>
       <h1 class="h3 mb-3 font-weight-normal">Have an account? Please sign in here:</h1>
       <div
         class="alert alert-danger"
@@ -36,7 +36,7 @@
         required
       />
       
-      <button type="submit">Sign in</button>
+      <button class="signIn" type="submit">Sign in</button>
     </form>
   </div>
 </template>
@@ -92,5 +92,17 @@ font-size: 50px;
 .h3{
   font-size: 43px;
 }
+.wantAccess{
+font-family: "Comfortaa", cursive;
+font-size: 40px;
+}
+.signIn{
+  font-size: 25px;
+  margin-left: 10px;
+}
+.sr-only2,.sr-only1{
+  margin-right: 5px;
+}
+
 </style>
 
